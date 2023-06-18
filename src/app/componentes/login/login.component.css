@@ -1,0 +1,80 @@
+* {
+    margin: responsive auto;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+
+    
+}
+.form-control{
+    font-size: x-large;
+}
+
+.form-register {
+    width: 400px;
+    background: #2486e8;
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 4px;
+    font-family: 'calibri';
+
+    background-image: -webkit-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -moz-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -ms-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -o-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: linear-gradient(to bottom, #2bb4de, #33d55b);
+}
+
+.form-register h4 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.Control{
+    width: 100%;
+    background: white;
+    padding: 5px;
+}
+
+.Boton {
+    width: 0,5 em;
+    background: #32a838;
+    padding: 10px;
+    margin: auto;
+    margin-left: center;
+    margin-top: 20px;
+    border-radius: 20px;
+    font-family: 'calibri';
+    text-decoration: none;
+    font-size: larger;
+    color: white;
+  
+    background-image: -webkit-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -moz-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -ms-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -o-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: linear-gradient(to bottom, #2bb4de, #33d55b);
+}
+.Boton:hover{
+    background: #2079b0;
+    background-image: -webkit-linear-gradient(top, #33d55b, #2bb4de);
+    background-image: -moz-linear-gradient(top, #33d55b, #2bb4de);
+    background-image: -ms-linear-gradient(top, #33d55b, #2bb4de);
+    background-image: -o-linear-gradient(top, #33d55b, #2bb4de);
+    background-image: linear-gradient(to bottom, #33d55b, #2bb4de);
+    text-decoration: none;
+    color: white;
+  }
+  #botonIni {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+  }
+  .text-center{
+    font-size: xx-large;
+  }
+  .form-label{
+    font-size: larger;
+  }

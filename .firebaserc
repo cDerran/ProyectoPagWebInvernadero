@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "proyectoinvernadero-4bdcb"
+  },
+  "targets": {
+    "proyectoinvernadero-4bdcb": {
+      "hosting": {
+        "ProyectoInvernadero": [
+          "proyectoinvernadero-4bdcb"
+        ]
+      }
+    }
+  }
+}

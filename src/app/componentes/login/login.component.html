@@ -1,0 +1,27 @@
+<form  [formGroup]="formularioDeUsuario" (ngSubmit)="login(formularioDeUsuario)" class="row g-3 needs-validation" novalidate>
+    <section class="form-register">
+      <div class="mb-3" >
+          <div class="text-center">Iniciar sesión</div>
+  
+          <label for="" class="form-label" class="form-label ">Correo: </label><br>
+          <input type="text" class="form-control"  [ngClass]="{'is-invalid': submitted && ControlFormulario.correo.errors}" formControlName="correo" placeholder="Ingrese su correo."/>
+          <div *ngIf="submitted && ControlFormulario.correo.errors" class="invalid-feedback">
+            <div *ngIf="ControlFormulario.correo.errors.required">El email es obligatorio</div>
+            <div *ngIf="ControlFormulario.correo.errors.email">Por favor, ingresa tu Email</div>
+          </div>
+      </div>
+      <div class="mb-3">
+          <label for="" class="form-label">Contraseña: </label><br>
+              <input type="text"
+                class="form-control"   formControlName="contra" [ngClass]="{'is-invalid': submitted && ControlFormulario.correo.errors}"  placeholder="Ingrese su contraseña.">
+                <div *ngIf="submitted && ControlFormulario.correo.errors" class="invalid-feedback">
+                  <div *ngIf="ControlFormulario.contra.errors.required">La contra es obligatoria</div>
+                </div>   
+      </div>
+      <div class="mb-3" id="botonIni">
+  
+        <input type="submit" name="InicioSesion" id="Btn_IniSess" class="Boton" value="Iniciar sesion"  >
+      </div>
+    </section>
+  </form><br>
+  

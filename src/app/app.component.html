@@ -1,0 +1,31 @@
+<!-- 
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div><!DOCTYPE html> -->
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="app.component.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar bg-body-tertiary" >
+      <ul class="nav navbar-nav" >
+        <li><a class="nav-item nav-link active" routerLink="Inicio" aria-current="page"><img src="./../assets/LogoChikito.jpg"/> </a></li>
+        <li><a class="Inicio" routerLink="Inicio">Inicio</a></li>
+        <li><a class="Informacion" routerLink="Nosotros">¿Quiénes somos?</a></li>
+        <li><a class="Informacion" routerLink="DetallePlanta">Informacion Planta</a></li>
+      </ul>
+
+      <ul class="navbar bg-body-tertiary" >
+        <li><a class="Informacion" routerLink="/Login" *ngIf="!verificalogin()">Inicio Sesion</a></li>
+        <li><a name="Cerrar" id="" class="Cerrar"  role="button" *ngIf="verificalogin()" (click)="logout()">Cerrar Sesion </a></li>
+      </ul>
+    </nav>    
+  </header>
+  
+  <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+</body>
+</html>

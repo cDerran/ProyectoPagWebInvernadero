@@ -1,0 +1,7 @@
+.card-body{
+    background-image: -webkit-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -moz-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -ms-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: -o-linear-gradient(top, #2bb4de, #33d55b);
+    background-image: linear-gradient(to bottom, #2bb4de, #33d55b);
+}

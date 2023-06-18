@@ -1,0 +1,97 @@
+<div id="div-select" >
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="miSelect" >
+    <option selected> <button class="botoneitor"> Elige tu cultivo </button></option>
+    <option value="1">Albahaca</option>
+    <option value="2">Lechuga</option>
+    <option value="3">Cilantro</option>
+    <option value="4">Cilantro</option>
+    <option value="5">Menta</option>
+    <option value="6">Espinaca</option>
+    <option value="7">Arándanos</option>
+  </select>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+
+
+      <div class="card">
+        <div class="card-header">
+            <strong>Datos Obtenidos </strong> 
+        </div>
+        <div class="card-body">            
+            <div class="table-responsive">
+                <table class="table table-primary">
+                    <thead>    
+                        <tr>
+                            <th scope="col">ID Usuario:</th>
+                            <th scope="col">Temperatura Ambiente:</th>
+                            <th scope="col">Temperatura Suelo:</th>
+                            <th scope="col">Humedad Ambiente:</th>
+                            <th scope="col">PH:</th>
+                            <th scope="col">Fecha:</th>
+                    </thead>
+                    <tbody><!-- FiltrarLista(ListaSinMostrar) -->
+                        <tr *ngFor="let Registros of FiltrarLista(ListaSinMostrar)">
+                            <td> {{   Registros.Uid        }} </td>
+                            <td> {{   Registros.TempAmb    }} </td>
+                            <td> {{   Registros.TempSuelo    }} </td>
+                            <td> {{   Registros.HumAmb     }} </td>
+                            <td> {{   Registros.PH  }} </td>
+                            <td> {{   Registros.Fecha  }} </td>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="col-sm-6" hidden>
+      <div class="card">
+        <div class="card-header">
+            Datos recomendables
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-primary">
+                    <thead>    
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Temperatura Mínima</th>
+                            <th scope="col">Temperatura Máxima</th>
+                            <th scope="col">Humedad Mínima</th>
+                            <th scope="col">Humedad Máxima</th>
+                            <th scope="col">pH Mínimo</th>
+                            <th scope="col">pH Máximo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">a</td>
+                            <td scope="row">f</td>
+                            <td scope="row">g</td>
+                            <td scope="row">afd</td>
+                            <td scope="row">h</td>
+                            <td scope="row">e</td>
+                            <td scope="row">hsd</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<button type="button" class = "btn btn-primary  btn-xs " (click)="mostrarxd()">aparecen Registros</button>
+
+
