@@ -3,18 +3,23 @@
 export class Usuario{
 
 
-    Uid:number;
-    Nombre: string="";
-    Correo: string="";
-    Clave:string="";
-    Telefono: number=0;
+    uid:String;
+    
+    email: string="";
+    password:string="";
+    nombre: string="";
+    apellido: string="";
+    telefono: number=0;
+    direccion: string="";
 
-    constructor(Id:number,Nombre:string,Correo:string,Clave:string,Telefono:number){
-        this.Uid = Id;
-        this.Nombre = Nombre;
-        this.Clave = Clave;
-        this.Telefono = Telefono;
-        this.Correo = Correo;
+    constructor(uid:String,email:string,password:string,Nombre:string,apellido:string,Telefono:number,direccion:string){
+        this.uid = uid;
+        this.nombre = Nombre;
+        this.apellido = apellido;
+        this.password = password;
+        this.telefono = Telefono;
+        this.email = email;
+        this.direccion = direccion;
     }
     
 }

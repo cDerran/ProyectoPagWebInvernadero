@@ -15,14 +15,14 @@ export class DetalleRegistroComponent implements OnInit {
 
   }
   
-  mostrarxd(){
+ /*  mostrarxd(){
     console.log(this.ListaSinMostrar.filter((filtrar)=> filtrar.Uid==this.infoensorService.ObtenerUid()));
     console.log(this.ListaSinMostrar);
-  }
+  } */
   
 
   ngOnInit(): void { 
-    this.listarReg();
+    //this.listarReg();
     
   }
 
@@ -30,20 +30,10 @@ export class DetalleRegistroComponent implements OnInit {
 
   
 
-  listarReg(){
-    this.infoensorService.getRegistros().subscribe(
-      datos => {
-        this.ListaSinMostrar = Object.values(datos);
-       
-      }
-    );
-
-  }
-
-  FiltrarLista(lista: RegSensor[]) {
+ /*  FiltrarLista(lista: RegSensor[]) {
     const ListReg= lista.filter((filtrar)=> filtrar.Uid===this.infoensorService.ObtenerUid());
     
     return ListReg;
-  }
+  } */
 
 }

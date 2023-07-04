@@ -1,22 +1,31 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable } from "rxjs";
-import { LoginService } from "src/app/Servicios/login.service";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import {  CanActivate, Router} from "@angular/router";
+import { Observable, map } from "rxjs";
 
 
 @Injectable()
 export class Guardian implements CanActivate{
 
-    constructor (private loginService: LoginService, private router: Router){}
+    constructor (
+        private router: Router,
+        private afAuth: AngularFireAuth
+    ){}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+    canActivate():Observable<boolean>{
 
-        if(this.loginService.Verificatoken()){
-            return true;
-        }else{
-            this.router.navigate(['/Login']);
-            return false;
-        }
+        return this.afAuth.authState.pipe(
+            map(user => {
+              if (user) {
+                // El usuario está autenticado, por lo que puede acceder a la ruta solicitada
+                return true;
+              } else {
+                alert("Inicie Sesion para poder ver esta pagina");
+                this.router.navigate(['/Login']);
+                return false;
+              }
+            })
+          );
     }
 
     

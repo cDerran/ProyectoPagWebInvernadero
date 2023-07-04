@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" #navbar>
+    <a class="navbar-brand" href="/Inicio"><img src="./../assets/LogoChikito.jpg"/></a>
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="!isCollapsed" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse w-100"  [ngClass]="{ 'show': !isCollapsed }" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="Inicio" (click)="closeNavbar()">Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="Nosotros"(click)="closeNavbar()">¿Quiénes somos?</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="DetallePlanta"(click)="closeNavbar()" >Informacion Planta</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="GestionUsuarios"(click)="closeNavbar()">Gestion de usuarios</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/Login" *ngIf="!user" (click)="closeNavbar()">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/Login" *ngIf="user" (click)="logout()" (click)="closeNavbar()">Cerrar Sesion </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  

@@ -1,0 +1,38 @@
+.registrarUsuario .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px; 
+  }
+  
+  .registrarUsuario .form-column {
+    flex: 1 0 200px; /* Ajusta el ancho de cada columna según tus necesidades */
+    margin-right: 10px; /* Espacio entre las columnas */
+    margin-bottom: 10px; 
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto; 
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
+  
+  .table tbody td {
+    padding: 20px;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #ec8b8b;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #daa1a1;
+  }

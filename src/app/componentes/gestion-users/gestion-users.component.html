@@ -1,0 +1,112 @@
+ <div class="registrarUsuario">
+  <form [formGroup]="formReg" (ngSubmit)="registerUser()">
+    <div class="form-row">
+      <div class="form-column">
+        <label>Email:</label>
+        <input type="email" formControlName="email" [value]="usuarioSeleccionado?.email">
+        <div *ngIf="formReg.get('email')?.errors && formReg.get('email')?.dirty">
+          <div *ngIf="formReg.get('email')?.hasError('required')">El email es requerido.</div>
+          <div *ngIf="formReg.get('email')?.hasError('email')">El email debe tener un formato válido.</div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Contraseña:</label>
+        <input type="password" formControlName="password" [value]="usuarioSeleccionado?.password">
+        <div *ngIf="formReg.get('password')?.errors && formReg.get('password')?.dirty">
+          <div *ngIf="formReg.get('password')?.hasError('required')">La contraseña es requerida.</div>
+          <div *ngIf="formReg.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Nombre:</label>
+        <input type="text" formControlName="nombre" [value]="usuarioSeleccionado?.nombre">
+        <div *ngIf="formReg.get('nombre')?.errors && formReg.get('nombre')?.dirty">
+          <div *ngIf="formReg.get('nombre')?.hasError('required')">El nombre es requerido.</div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Apellido:</label>
+        <input type="text" formControlName="apellido" [value]="usuarioSeleccionado?.apellido">
+        <div *ngIf="formReg.get('apellido')?.errors && formReg.get('apellido')?.dirty">
+          <div *ngIf="formReg.get('apellido')?.hasError('required')">El apellido es requerido.</div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Direccion:</label>
+        <input type="text" formControlName="direccion" [value]="usuarioSeleccionado?.direccion">
+        <div *ngIf="formReg.get('direccion')?.errors && formReg.get('direccion')?.dirty">
+          <div *ngIf="formReg.get('direccion')?.hasError('required')">La dirección es requerida.</div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Telefono:</label>
+        <input type="text" formControlName="telefono" [value]="usuarioSeleccionado?.telefono" (input)="SoloNumeros($event)">
+        <div *ngIf="formReg.get('telefono')?.errors && formReg.get('telefono')?.dirty">
+          <div *ngIf="formReg.get('telefono')?.hasError('required')">El teléfono es requerido.</div>
+        </div>
+      </div>
+      <div class="form-column" style="display: none;">
+        <label>ID:</label>
+        <input type="text" formControlName="telefono" [value]="usuarioSeleccionado?.uid" (input)="SoloNumeros($event)">
+       
+      </div >
+    </div>
+
+    <div class="form-row">
+      <button type="submit" *ngIf="!modoEdicion" class="btn btn-outline-success">Registrar</button>
+      <button type="button" *ngIf="modoEdicion" class="btn btn-outline-success" (click)="aceptarEdicion()">Aceptar</button>
+    </div>
+  </form>
+</div>
+
+<div class="BuscarUsuario">
+  <form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="filtroEmail" [ngModelOptions]="{standalone: true}"(input)="filtrarUsuariosAutomaticamente()">
+    <button class="btn btn-outline-success" type="submit">buscar</button>
+  </form>
+</div>
+
+<div class="table-container">
+  <h1>LISTA DE USUARIOS REGISTRADOS</h1>
+  <table class="table table-responsive">
+    <thead class="thead-dark letrapequena">
+      <tr *ngIf="tieneUsuarios" >
+        <th>UID</th>
+        <th>NOMBRE</th>
+        <th>APELLIDO</th>
+        <th>EMAIL</th>
+        <th>Contraseña</th>
+        <th>DIRECCION</th>
+        <th>TELEFONO</th>
+        <th>GESTIONAR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-contacto [ngForOf]="ListUsers">
+        <tr *ngIf="contacto.email.includes(filtroEmail)">
+          <td>{{ contacto.uid }}</td>
+          <td>{{ contacto.nombre }}</td>
+          <td>{{ contacto.apellido }}</td>
+          <td>{{ contacto.email }}</td>
+          <td>{{ contacto.password }}</td>
+          <td>{{ contacto.direccion }}</td>
+          <td>{{ contacto.telefono }}</td>
+          <td>
+            <button class="btn btn-outline-warning" (click)="editarUsuario(contacto)">MODIFICAR</button>
+            <button class="btn btn-danger"(click)="eliminarUsuario(contacto)">ELIMINAR</button>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+
+  <ng-template *ngIf="!tieneUsuarios">
+    <h1 class="cambio_color1"><p>No hay usuarios registrados.</p></h1>
+  </ng-template>
+</div>
+ 

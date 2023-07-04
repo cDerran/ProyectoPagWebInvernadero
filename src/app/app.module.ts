@@ -8,21 +8,26 @@ import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { PageNotFoundComponent } from './componentes/page-not-found/page-not-found.component';
 import { QuienesSomosComponent } from './componentes/quienes-somos/quienes-somos.component';
+import { GestionUsersComponent } from './componentes/gestion-users/gestion-users.component';
 
-import{ FormsModule, ReactiveFormsModule } from '@angular/forms';
-import{ HttpClientModule} from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
-import { initializeApp,provideFirebaseApp,getApp } from '@angular/fire/app';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { Guardian } from './componentes/login/login_guardian';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
+import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './Servicios/data.service';
 import { LoginService } from './Servicios/login.service';
 import { UsuarioService } from './Servicios/usuario.service';
 import { InfoSensorService } from './Servicios/infosensor.service';
-import { Guardian } from './componentes/login/login_guardian';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule} from '@angular/fire/compat/firestore';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { NavbarComponent } from './componentes/navbar/navbar.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -31,18 +36,29 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     HomeComponent,
     LoginComponent,
     PageNotFoundComponent,
-    QuienesSomosComponent
+    QuienesSomosComponent,
+    GestionUsersComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
     ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()) 
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
-  providers: [DataService,UsuarioService,LoginService,CookieService,Guardian,InfoSensorService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [
+    DataService,
+    UsuarioService,
+    GestionUsersComponent,
+    LoginService,CookieService,
+    Guardian,
+    InfoSensorService,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

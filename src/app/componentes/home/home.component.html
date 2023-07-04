@@ -10,35 +10,4 @@
       <img class="card-img-top" src="./../../../assets/Invernadero.jpg" alt="Aquí va la imagen de inicio">
   
   
-      <div class="container">
-        <div align="center">
-          <h1>LISTA DE USUARIOS REGISTRADOS</h1>
-          <table class="table table-responsive">
-            <thead class="thead-dark  letrapequena" >
-               <tr *ngIf="hayRegistros(); else no_personas_registradas">
-                <th>ID</th>
-                <th>NOMBRE</th>
-                <th>EMAIL</th>
-                <th>Contraseña</th>
-                <th>telefono</th>
-               </tr>
-             </thead>
-              <tr *ngFor="let contacto of Listusers" >
-              <td> {{   contacto.Uid        }} </td>
-              <td> {{   contacto.Nombre    }} </td>
-              <td> {{   contacto.Correo    }} </td>
-              <td> {{   contacto.Clave     }} </td>
-              <td> {{   contacto.Telefono  }} </td>
-              </tr>
-            
-          </table>
-        
-        
-          <ng-template #no_personas_registradas>
-           <h1 class="cambio_color1"><p>No hay usuarios registrados.</p></h1>
-          </ng-template>
-        
-        </div>
-        </div> 
-  
-      <button (click)="mostrarUsuarios()">aaaaaaaaa</button>
+     

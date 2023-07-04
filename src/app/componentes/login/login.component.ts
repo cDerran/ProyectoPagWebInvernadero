@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Servicios/login.service';
-import { UsuarioService } from 'src/app/Servicios/usuario.service';
+import { User } from 'firebase/auth';
 
 
 @Component({
@@ -11,56 +13,58 @@ import { UsuarioService } from 'src/app/Servicios/usuario.service';
 })
 export class  LoginComponent implements OnInit {
 
-
-
+  user: any;
   formularioDeUsuario: FormGroup;
   submitted=false;
-  Listemp: any[]=[];
-  
   
   constructor(
-    private usuarioService:UsuarioService,
     private loginService: LoginService,
-    public formulario:FormBuilder) { 
-
-
+    public formulario:FormBuilder,
+    private router: Router,
+    private auth: AngularFireAuth
+  ) { 
       this.formularioDeUsuario = this.formulario.group({
       contra:[''],
       correo:['']  
     }); 
+
   }
 
-
+  login(form: FormGroup) {
+    const correo= form.value.correo;
+    const password= form.value.contra;
+    
+    this.loginService.Login(correo, password);
+  }
    ngOnInit() {
       
   }
 
   ngSubmit(){
     
-    const uid =  this.loginService.getUid();
-    console.log(uid);
   }  
 
-  login(form: FormGroup){
+   /*login(form: FormGroup){
 
     const correo= form.value.correo;
     const password= form.value.contra;
 
-    this.loginService.LoginMejorado(correo,password);
+    this.loginService.login(correo,password)
+    .then(() => {
+      this.router.navigate(['/Inicio']);     
+    })
+    .catch((error) => {
+      console.log('error al iniciar sesion',error);
+    }); 
 
 
-  }
+  }*/
 
   public get ControlFormulario():any{
     return this.formularioDeUsuario.controls;
 
   }
 
-    SeleccionarUsuario(){
-      //esta funcion me va a servir para la actualizacion de los datos entregados por los sensores
-
-    return this.usuarioService.encontrarIndice(this.Listemp,this.formularioDeUsuario.value.correo,this.formularioDeUsuario.value.contra)
-  } 
 
   
 
