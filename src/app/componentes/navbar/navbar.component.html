@@ -13,10 +13,10 @@
             <a class="nav-link" routerLink="Nosotros"(click)="closeNavbar()">¿Quiénes somos?</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="DetallePlanta"(click)="closeNavbar()" >Informacion Planta</a>
+            <a class="nav-link" routerLink="DetallePlanta"(click)="closeNavbar()" *ngIf=" tipoUsuario != 'Administrador' ">Informacion Sensores</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="GestionUsuarios"(click)="closeNavbar()">Gestion de usuarios</a>
+            <a class="nav-link" routerLink="GestionUsuarios"(click)="closeNavbar()"*ngIf="tipoUsuario == 'Administrador'">Gestion de usuarios</a>
         </li>
       </ul>
       <ul class="navbar-nav">

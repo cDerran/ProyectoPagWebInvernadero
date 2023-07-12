@@ -1,6 +1,7 @@
 import { Component,ElementRef,HostListener, ViewChild  } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoginService } from 'src/app/Servicios/login.service';
+import { UsuarioService } from 'src/app/Servicios/usuario.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,20 +11,38 @@ import { LoginService } from 'src/app/Servicios/login.service';
 export class NavbarComponent {
     user: any;
     isCollapsed: boolean = true;
+    tipoUsuario: string ='';
 
   constructor(
     private loginService:LoginService,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private userService: UsuarioService
   ){ 
-
+    
     this.auth.user.subscribe((user) => {
       this.user = user;
+      
+      try{
+        this.obtenerTipoUsuario(this.user.uid);
+      }catch(err) {
+        console.log(err);
+      }
     });
+    
+  }
+   ngOnInit(){
+    
    }
-
+   
+   obtenerTipoUsuario(uid: string) {
+    this.userService.getTipoUsuario(uid).subscribe((tipo: string) => {
+      this.tipoUsuario = tipo;
+    });
+  }
 
    logout(){
     this.loginService.logout();
+    this.tipoUsuario = '';
   } 
 
   closeNavbar() {

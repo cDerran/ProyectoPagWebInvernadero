@@ -44,21 +44,7 @@ export class  LoginComponent implements OnInit {
     
   }  
 
-   /*login(form: FormGroup){
-
-    const correo= form.value.correo;
-    const password= form.value.contra;
-
-    this.loginService.login(correo,password)
-    .then(() => {
-      this.router.navigate(['/Inicio']);     
-    })
-    .catch((error) => {
-      console.log('error al iniciar sesion',error);
-    }); 
-
-
-  }*/
+   
 
   public get ControlFormulario():any{
     return this.formularioDeUsuario.controls;

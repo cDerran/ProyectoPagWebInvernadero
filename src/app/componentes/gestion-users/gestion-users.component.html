@@ -1,5 +1,21 @@
  <div class="registrarUsuario">
   <form [formGroup]="formReg" (ngSubmit)="registerUser()">
+    <div class="form-column">
+      <label>Tipo de usuario:</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="tipoUsuario" value="Administrador" name="tipoUsuario"[checked]="tipousuario === 'Administrador'" >
+          Administrador
+        </label>
+        <label>
+          <input type="radio" formControlName="tipoUsuario" value="Normal" name="tipoUsuario" [checked]="tipousuario === 'Normal'">
+          Usuario Normal
+        </label>
+      </div>
+      <div *ngIf="formReg.get('tipoUsuario')?.errors && formReg.get('tipoUsuario')?.dirty">
+        <div *ngIf="formReg.get('tipoUsuario')?.hasError('required')">El tipo de usuario es requerido.</div>
+      </div>
+    </div>
     <div class="form-row">
       <div class="form-column">
         <label>Email:</label>
@@ -9,7 +25,6 @@
           <div *ngIf="formReg.get('email')?.hasError('email')">El email debe tener un formato válido.</div>
         </div>
       </div>
-
       <div class="form-column">
         <label>Contraseña:</label>
         <input type="password" formControlName="password" [value]="usuarioSeleccionado?.password">
@@ -35,7 +50,7 @@
         </div>
       </div>
 
-      <div class="form-column">
+      <div class="form-column" >
         <label>Direccion:</label>
         <input type="text" formControlName="direccion" [value]="usuarioSeleccionado?.direccion">
         <div *ngIf="formReg.get('direccion')?.errors && formReg.get('direccion')?.dirty">
@@ -43,7 +58,7 @@
         </div>
       </div>
 
-      <div class="form-column">
+      <div class="form-column" >
         <label>Telefono:</label>
         <input type="text" formControlName="telefono" [value]="usuarioSeleccionado?.telefono" (input)="SoloNumeros($event)">
         <div *ngIf="formReg.get('telefono')?.errors && formReg.get('telefono')?.dirty">
@@ -60,14 +75,17 @@
     <div class="form-row">
       <button type="submit" *ngIf="!modoEdicion" class="btn btn-outline-success">Registrar</button>
       <button type="button" *ngIf="modoEdicion" class="btn btn-outline-success" (click)="aceptarEdicion()">Aceptar</button>
-    </div>
+      <button type="button"  class="btn btn-primary" (click)="mostrarUsuariosNormales()">Mostrar Administradores</button>
+      <button type="button"  class="btn btn-primary"(click)="mostrarUsuariosAdministradores()">Mostrar Usuarios Normales</button>
+    </div >
+    
   </form>
 </div>
 
 <div class="BuscarUsuario">
   <form class="d-flex" role="search">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="filtroEmail" [ngModelOptions]="{standalone: true}"(input)="filtrarUsuariosAutomaticamente()">
-    <button class="btn btn-outline-success" type="submit">buscar</button>
+    <input class="form-control me-2" type="search" placeholder="Ingresa Correo" aria-label="Search" [(ngModel)]="filtroEmail" [ngModelOptions]="{standalone: true}"(input)="filtrarUsuariosAutomaticamente()">
+    
   </form>
 </div>
 
@@ -87,7 +105,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-template ngFor let-contacto [ngForOf]="ListUsers">
+      <ng-template ngFor let-contacto [ngForOf]="UsuariosMostrados">
         <tr *ngIf="contacto.email.includes(filtroEmail)">
           <td>{{ contacto.uid }}</td>
           <td>{{ contacto.nombre }}</td>
@@ -102,6 +120,7 @@
           </td>
         </tr>
       </ng-template>
+      
     </tbody>
   </table>
 

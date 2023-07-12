@@ -5,8 +5,8 @@
   }
   
   .registrarUsuario .form-column {
-    flex: 1 0 200px; /* Ajusta el ancho de cada columna según tus necesidades */
-    margin-right: 10px; /* Espacio entre las columnas */
+    flex: 1 0 200px; 
+    margin-right: 10px; 
     margin-bottom: 10px; 
   }
 

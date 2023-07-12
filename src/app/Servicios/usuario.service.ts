@@ -20,14 +20,48 @@ export class UsuarioService{
       return this.db.list('Usuarios').valueChanges();
     }
 
+    RegistrarAdministrador(email:string, password:string,nombre:string,apellido:string,direccion:string,telefono:string){
+      return this.afAuth.createUserWithEmailAndPassword(email,password)
+      .then((admin) =>{
+        if(admin && admin.user){
+          const uid = admin.user.uid;
+          const datosUsuario = {
+            uid: uid,
+            email: email,
+            nombre:nombre,
+            apellido:apellido,
+            password:password,
+            direccion:direccion,
+            telefono:telefono,
 
-    registerUser(email: string, password: string,nombre: string,apellido: string,direccion:string,telefono:string){
+          };
+          return this.db.object("/Administradores/"+uid).set(datosUsuario);
+        }else{
+          console.error('Error al crear el usuario: Usuario no válido');
+          return null;
+        }
+        
+      }).catch((error) => {
+        console.error('Servicios:  Error al crear al Admin:', error);
+      });
+    }
+
+    registerUser(email: string, password: string,nombre: string,apellido: string,direccion:string,telefono:string,Tipo:string){
      return this.afAuth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             if (userCredential && userCredential.user) {
                 const uid = userCredential.user.uid;
-                
-                return this.guardarDatos(uid,email,nombre,apellido,password,direccion,telefono);
+                const datosUsuario = {
+                  uid: uid,
+                  email: email,
+                  nombre:nombre,
+                  apellido:apellido,
+                  password:password,
+                  direccion:direccion,
+                  telefono:'+56'+telefono,
+                  Tipo: Tipo
+                };
+                return this.db.object("/Usuarios/"+uid).set(datosUsuario);
                 
               } else {
                 console.error('Error al crear el usuario: Usuario no válido');
@@ -95,8 +129,6 @@ export class UsuarioService{
               console.error(`Error al actualizar campo '${campo}' en la base de datos Realtime de Firebase:`, error);
             });
 
-
-
           }else{
             usuarioRef.update({ [campo]: usuario[campo as keyof Usuario] })
             .then(() => {
@@ -112,13 +144,11 @@ export class UsuarioService{
      
     }
 
-    
+    getTipoUsuario(uid: string): Observable<any> {
+      return this.db.object(`Usuarios/${uid}/Tipo`).valueChanges();
+    }
 
     guardarDatos(uid: any, email: any, nombre: any, apellido: any, password: any,direccion:any,telefono:any) {
-      
-      
-      
-      
       const datosUsuario = {
             uid: uid,
             email: email,
@@ -126,7 +156,8 @@ export class UsuarioService{
             apellido:apellido,
             password:password,
             direccion:direccion,
-            telefono:'+56'+telefono
+            telefono:'+56'+telefono,
+            Tipo: ''
           };
         return this.db.object("/Usuarios/"+uid).set(datosUsuario);
 

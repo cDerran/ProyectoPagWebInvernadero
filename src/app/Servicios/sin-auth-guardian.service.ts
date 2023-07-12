@@ -18,11 +18,16 @@ export class SinAuthGuardian {
     return this.afAuth.authState.pipe(
       map(user => {
         if (user) {
+        
           this.router.navigate(['/Inicio']);
           return false;
+        
         } else {
+        
           return true;
+        
         }
+
       })
     );
   }

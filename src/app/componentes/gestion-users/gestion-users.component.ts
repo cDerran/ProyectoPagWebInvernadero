@@ -13,13 +13,15 @@ import { UsuarioService } from 'src/app/Servicios/usuario.service';
 
 export class GestionUsersComponent {
   formReg: FormGroup;
-  ListUsers:Usuario[] = []; 
+  Lista:Usuario[] = [];
+  UsuariosMostrados: any[] = [];
   usuariosFiltrados: Usuario[] = [];
   tieneUsuarios!: boolean;
   modoEdicion: boolean = false;
   usuarioSeleccionado: any;
   filtroEmail: string = '';
-  
+  mostrarCamposExtras: boolean = true;
+  tipousuario: String = '';
   constructor(
     private userService:UsuarioService,
     private fb: FormBuilder
@@ -31,33 +33,53 @@ export class GestionUsersComponent {
         nombre:    ['', Validators.required],
         apellido:  ['', Validators.required],
         direccion: ['', Validators.required],
-        telefono:  ['', Validators.required]
+        telefono:  ['', Validators.required],
+        tipoUsuario: ['', Validators.required],
       });
+
+
+      
+
   }
 
+  mostrarUsuariosNormales() {
+    this.UsuariosMostrados = this.Lista.filter(usuario => usuario.Tipo === 'Normal');
+  }
+  
+  mostrarUsuariosAdministradores() {
+    this.UsuariosMostrados = this.Lista.filter(usuario => usuario.Tipo === 'Administrador');
+  }
+
+
+
   filtrarUsuariosAutomaticamente(){
-    this.usuariosFiltrados = this.ListUsers.filter(usuario =>
+    this.usuariosFiltrados = this.Lista.filter(usuario =>
       usuario.email.includes(this.filtroEmail)
     );
   }
 
 
 
-  ngOnInit(): void {
+  ngOnInit() {
     
     this.userService.getUsers().subscribe(usuarios => {
-      this.ListUsers = usuarios;
-      console.log(this.ListUsers);
-    });
+        this.Lista = usuarios;
+        console.log(this.Lista);
+        this.mostrarUsuariosNormales();
+      });
 
     this.userService.ExistenUsuarios().subscribe(tieneUsuarios => {
       this.tieneUsuarios = tieneUsuarios;
+      
     });
+
+    
   }
   
   editarUsuario(usuario: Usuario) {
     this.modoEdicion = true;
     this.usuarioSeleccionado = usuario;
+    this.tipousuario= usuario.Tipo;
   }
 
   aceptarEdicion() {
@@ -67,7 +89,7 @@ export class GestionUsersComponent {
     const apellido = this.formReg.get('apellido')?.value;
     const direccion = this.formReg.get('direccion')?.value;
     const telefono = this.formReg.get('telefono')?.value;
-
+    const Tipo = this.formReg.get('tipoUsuario')?.value;
     const usuario: Usuario = {
       uid: this.usuarioSeleccionado.uid,
       email: email,
@@ -75,7 +97,8 @@ export class GestionUsersComponent {
       nombre: nombre,
       apellido: apellido,
       direccion: direccion,
-      telefono: telefono
+      telefono: telefono,
+      Tipo: Tipo
     };
     this.userService.actualizarUsuario(usuario, this.usuarioSeleccionado.email,this.usuarioSeleccionado.password);
 
@@ -111,8 +134,11 @@ export class GestionUsersComponent {
       const apellido = this.formReg.get('apellido')?.value;
       const direccion =this.formReg.get('direccion')?.value;
       const telefono =this.formReg.get('telefono')?.value;
+      const tipoUsuario = this.formReg.get('tipoUsuario')?.value;
+
+
       
-      this.userService.registerUser(email, password, nombre, apellido,direccion, telefono)
+       this.userService.registerUser(email, password, nombre, apellido,direccion, telefono,tipoUsuario)
         .then(() => {
           location.reload();
           alert('Usuario registrado correctamente');
@@ -121,6 +147,8 @@ export class GestionUsersComponent {
         .catch((error) => {
           console.log('Componente= Error al registrar usuario:', error);
         });
+
+      
     }
   } 
 

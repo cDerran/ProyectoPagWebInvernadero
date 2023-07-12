@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "proyectoinvernadero-4bdcb"
+    "default": "proyectoinvernaderoarica-ab35c"
   },
   "targets": {
-    "proyectoinvernadero-4bdcb": {
+    "proyectoinvernaderoarica-ab35c": {
       "hosting": {
         "ProyectoInvernadero": [
-          "proyectoinvernadero-4bdcb"
+          "proyectoinvernadero-arica"
         ]
       }
     }

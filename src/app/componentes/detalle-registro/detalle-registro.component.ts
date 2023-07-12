@@ -1,7 +1,4 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { RegSensor } from 'src/app/Modelos/RegSensor';
-import { InfoSensorService } from 'src/app/Servicios/infosensor.service';
-
 @Component({
   selector: 'app-RegSensores',
   templateUrl: './detalle-registro.component.html',
@@ -9,9 +6,8 @@ import { InfoSensorService } from 'src/app/Servicios/infosensor.service';
 })
 export class DetalleRegistroComponent implements OnInit {
   
-  ListaSinMostrar: RegSensor[]= [];
   
-  constructor(private infoensorService: InfoSensorService){
+  constructor(){
 
   }
   
