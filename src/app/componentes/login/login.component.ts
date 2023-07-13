@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Servicios/login.service';
-import { User } from 'firebase/auth';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { User } from 'firebase/auth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class  LoginComponent implements OnInit {
+export class  LoginComponent  {
 
   user: any;
   formularioDeUsuario: FormGroup;
@@ -36,9 +35,7 @@ export class  LoginComponent implements OnInit {
     
     this.loginService.Login(correo, password);
   }
-   ngOnInit() {
-      
-  }
+   
 
   ngSubmit(){
     

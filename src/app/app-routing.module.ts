@@ -8,7 +8,6 @@ import { LoginComponent } from './componentes/login/login.component';
 import { PageNotFoundComponent } from './componentes/page-not-found/page-not-found.component';
 import { GestionUsersComponent } from './componentes/gestion-users/gestion-users.component';
 import { SinAuthGuardian } from './Servicios/sin-auth-guardian.service';
-import { NavbarComponent } from './componentes/navbar/navbar.component';
 
 
 const appRoute: Routes=[

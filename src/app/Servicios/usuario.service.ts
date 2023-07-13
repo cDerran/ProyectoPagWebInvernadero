@@ -79,20 +79,23 @@ export class UsuarioService{
 
       const usuarioRef = this.db.object(`Usuarios/${usuario.uid}`);
       for (const campo in usuario) {
+        
+
         if (usuario.hasOwnProperty(campo) && campo in usuario && usuario[campo as keyof Usuario] != null && usuario[campo as keyof Usuario] !== undefined && usuario[campo as keyof Usuario] !== "") {
          
-          if(campo == "password"){//Modificar cuando el password se cambio
+          if(campo === "password"){
+
             this.afAuth.signInWithEmailAndPassword(correo, password)
               .then((userCredential) =>{
                 
                 var user = userCredential.user;
-                user?.updatePassword(usuario.email)
+                user?.updatePassword(usuario.password)
                 .then(() => {
                   usuarioRef.update({ [campo]: usuario[campo as keyof Usuario] })
                   console.log(`Campo '${campo}' actualizado en la base de datos Realtime de Firebase`);
                 })
                 .catch((error) => {
-                  console.error("Error al actualizar correo electrónico: ", error);
+                  console.error("Error al actualizar Password: ", error);
                 });
               })
               

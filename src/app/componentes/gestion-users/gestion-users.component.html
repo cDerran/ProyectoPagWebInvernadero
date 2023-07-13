@@ -105,7 +105,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-template ngFor let-contacto [ngForOf]="UsuariosMostrados">
+      <ng-template ngFor let-contacto [ngForOf]="Lista">
         <tr *ngIf="contacto.email.includes(filtroEmail)">
           <td>{{ contacto.uid }}</td>
           <td>{{ contacto.nombre }}</td>

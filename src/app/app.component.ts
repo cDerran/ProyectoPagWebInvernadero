@@ -1,7 +1,5 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginService } from './Servicios/login.service';
-import { User } from 'firebase/auth';
-import { onAuthStateChanged } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -28,20 +26,7 @@ export class AppComponent {
     this.loginService.logout();
   } 
 
-  ngOnInit(){
-    /* onAuthStateChanged(this.loginService.auth, (user) => {
-      this.user = user;
-    }); */
 
-  }
-
-
-
-  verificalogin()
-  {
-
-  
-  }
 
   
 }

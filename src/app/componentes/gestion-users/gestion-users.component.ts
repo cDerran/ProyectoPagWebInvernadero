@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/Modelos/Usuario';
 import { UsuarioService } from 'src/app/Servicios/usuario.service';
 
@@ -100,6 +100,7 @@ export class GestionUsersComponent {
       telefono: telefono,
       Tipo: Tipo
     };
+    //console.log(this.usuarioSeleccionado.password+ ' '+ this.usuarioSeleccionado.email);
     this.userService.actualizarUsuario(usuario, this.usuarioSeleccionado.email,this.usuarioSeleccionado.password);
 
     this.modoEdicion = false;
