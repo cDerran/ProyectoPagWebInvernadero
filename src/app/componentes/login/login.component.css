@@ -1,80 +1,163 @@
-* {
-    margin: responsive auto;
-    padding: 0;
-    box-sizing: border-box;
-    color: black;
-
-    
-}
-.form-control{
-    font-size: x-large;
-}
-
-.form-register {
-    width: 400px;
-    background: #2486e8;
-    padding: 20px;
-    margin: auto;
-    margin-top: 100px;
-    border-radius: 4px;
-    font-family: 'calibri';
-
-    background-image: -webkit-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -moz-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -ms-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -o-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: linear-gradient(to bottom, #2bb4de, #33d55b);
-}
-
-.form-register h4 {
-    font-size: 22px;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.Control{
-    width: 100%;
-    background: white;
-    padding: 5px;
-}
-
-.Boton {
-    width: 0,5 em;
-    background: #32a838;
-    padding: 10px;
-    margin: auto;
-    margin-left: center;
-    margin-top: 20px;
-    border-radius: 20px;
-    font-family: 'calibri';
-    text-decoration: none;
-    font-size: larger;
-    color: white;
-  
-    background-image: -webkit-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -moz-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -ms-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: -o-linear-gradient(top, #2bb4de, #33d55b);
-    background-image: linear-gradient(to bottom, #2bb4de, #33d55b);
-}
-.Boton:hover{
-    background: #2079b0;
-    background-image: -webkit-linear-gradient(top, #33d55b, #2bb4de);
-    background-image: -moz-linear-gradient(top, #33d55b, #2bb4de);
-    background-image: -ms-linear-gradient(top, #33d55b, #2bb4de);
-    background-image: -o-linear-gradient(top, #33d55b, #2bb4de);
-    background-image: linear-gradient(to bottom, #33d55b, #2bb4de);
-    text-decoration: none;
-    color: white;
-  }
-  #botonIni {
+body {
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    max-width: 400px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type='email'],
+.form-group input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group input[type='email']:focus,
+.form-group input[type='password']:focus {
+    border-color: #333;
+    outline: none;
+}
+
+.form-group .tooltip-icon {
+    visibility: hidden;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.form-group input[type='email'].is-invalid:hover + .tooltip-icon,
+.form-group input[type='password'].is-invalid:hover + .tooltip-icon,
+.form-group input[type='email']:hover.is-invalid + .tooltip-icon,
+.form-group input[type='password']:hover.is-invalid + .tooltip-icon {
+    visibility: visible;
+}
+
+.form-group .is-invalid {
+    border-color: #dc3545; /* Rojo */
+}
+
+.form-group .invalid-feedback {
+    color: #dc3545; /* Rojo */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #dc3545;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.form-group input[type='email'].is-invalid:hover ~ .invalid-feedback,
+.form-group input[type='password'].is-invalid:hover ~ .invalid-feedback {
+    display: block;
+}
+
+.btn-primary {
+    background-color: #333;
+    border-color: #333;
+}
+
+.btn-primary:hover {
+    background-color: #555;
+    border-color: #555;
+}
+
+.password-link {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.password-link a {
+    color: #333;
+    text-decoration: none;
+}
+
+.password-link a:hover {
+    text-decoration: underline;
+}
+
+button[type='submit'] {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type='submit']:hover {
+    background-color: #555;
+}
+
+.input-group {
+    position: relative;
   }
-  .text-center{
-    font-size: xx-large;
+  
+  .input-group-append {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+    margin-right: 10px; /* Ajusta según sea necesario */
+    display: flex;
+    align-items: center;
   }
-  .form-label{
-    font-size: larger;
+  
+  .toggle-password {
+    background: transparent;
+    border: none;
+    
+  }
+  
+  /* Opcional: Estilos para quitar el borde y fondo del botón para que parezca más integrado */
+  .toggle-password:focus {
+    outline: none;
+    box-shadow: none;
   }

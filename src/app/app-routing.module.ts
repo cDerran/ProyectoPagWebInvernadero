@@ -8,6 +8,8 @@ import { LoginComponent } from './componentes/login/login.component';
 import { PageNotFoundComponent } from './componentes/page-not-found/page-not-found.component';
 import { GestionUsersComponent } from './componentes/gestion-users/gestion-users.component';
 import { SinAuthGuardian } from './Servicios/sin-auth-guardian.service';
+import { NuevoPasswordComponent } from './componentes/nuevo-password/nuevo-password.component';
+import { DashboardComponent } from './componentes/dashboard/dashboard.component';
 
 
 const appRoute: Routes=[
@@ -18,6 +20,8 @@ const appRoute: Routes=[
   {path: 'DetallePlanta', component:DetalleRegistroComponent, canActivate: [Guardian]},
   {path: 'Login', component:LoginComponent, canActivate: [SinAuthGuardian]},
   {path: 'GestionUsuarios', component:GestionUsersComponent, canActivate: [Guardian]},
+  {path: 'Reset-password', component:NuevoPasswordComponent},
+  {path: 'Dashboard', component:DashboardComponent},
   {path: '**', component: PageNotFoundComponent }
   
 ];

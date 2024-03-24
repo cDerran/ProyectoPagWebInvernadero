@@ -1,16 +1,26 @@
 {
   "rules": {
     ".read": "auth != null",
-  ".write": "auth != null && (root.child('Usuarios').child(auth.uid).child('Tipo').val() == 'Administrador'  ) ",
-    "Usuarios": {
-      "$user_id": {
-        ".read": "auth != null",
-        ".write": "auth != null && (root.child('Usuarios').child(auth.uid).child('Tipo').val() == 'Administrador' || $user_id == auth.uid)"
+  ".write": "auth != null && (root.child('Usuarios/Administradores').child(auth.uid).child('Tipo').val() == 'Administrador'  ) ",
+    "Usuarios":{
+      "Clientes": {
+        "$user_id": {
+          
+          ".read": "auth != null && (root.child('Usuarios/Administradores').child(auth.uid).child('Tipo').val() == 'Administrador'  ) ",
+          ".write": "auth != null && (root.child('Usuarios/Administradores').child(auth.uid).child('Tipo').val() == 'Administrador'  ) "
+        }
+      },
+      "Administradores": {
+        "$user_id": {
+          
+          ".read": "auth != null && (root.child('Usuarios/Administradores').child(auth.uid).child('Tipo').val() == 'Administrador'  ) ",
+          ".write": "auth != null && (root.child('Usuarios/Administradores').child(auth.uid).child('Tipo').val() == 'Administrador'  ) "
+        }
       }
     },
       "Sensores": {
       ".read": "auth != null",
-      ".write": "auth != null && root.child('Usuarios').child(auth.uid).child('Tipo').val() == 'Normal'"
+      ".write": "auth != null && root.child('Usuarios/Cliente').child(auth.uid).child('Tipo').val() == 'Normal'"
     }
       
   }

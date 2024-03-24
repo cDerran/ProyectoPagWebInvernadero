@@ -1,27 +1,41 @@
-<form  [formGroup]="formularioDeUsuario" (ngSubmit)="login(formularioDeUsuario)" class="row g-3 needs-validation" novalidate>
-    <section class="form-register">
-      <div class="mb-3" >
-          <div class="text-center">Iniciar sesión</div>
-  
-          <label for="" class="form-label" class="form-label ">Correo: </label><br>
-          <input type="text" class="form-control"  [ngClass]="{'is-invalid': submitted && ControlFormulario.correo.errors}" formControlName="correo" placeholder="Ingrese su correo."/>
-          <div *ngIf="submitted && ControlFormulario.correo.errors" class="invalid-feedback">
-            <div *ngIf="ControlFormulario.correo.errors.required">El email es obligatorio</div>
-            <div *ngIf="ControlFormulario.correo.errors.email">Por favor, ingresa tu Email</div>
+<div class="container">
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <form [formGroup]="formularioDeUsuario" (ngSubmit)="login()">
+      
+      <!-- Grupo de correo -->
+      <div class="form-group">
+        <input type="email" class="form-control" [ngClass]="{'is-invalid': formularioDeUsuario.get('correo')?.touched && formularioDeUsuario.get('correo')?.errors}" formControlName="correo" placeholder="m@example.com">
+        <label for="email">Correo electrónico</label>
+        <div *ngIf="formularioDeUsuario.get('correo')?.touched && formularioDeUsuario.get('correo')?.errors" class="invalid-feedback">
+          <div *ngIf="formularioDeUsuario.get('correo')?.errors?.['required']">El correo es obligatorio.</div>
+          <div *ngIf="formularioDeUsuario.get('correo')?.errors?.['email']">Debe ser un correo válido.</div>
+        </div>
+      </div>
+      
+      <!-- Grupo de contraseña -->
+      <div class="form-group">
+        <div class="input-group">
+          <input [type]="mostrarContra ? 'text' : 'password'" class="form-control" formControlName="contra" placeholder="Contraseña" [ngClass]="{'is-invalid': formularioDeUsuario.get('contra')?.touched && formularioDeUsuario.get('contra')?.errors}" formControlName="contra">
+          <div class="input-group-append">
+            <button type="button" class="toggle-password" (click)="toggleMostrarContra()">
+              <i [class]="mostrarContra ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
           </div>
+        </div>
+        <label for="password">Contraseña</label>
+        <div *ngIf="formularioDeUsuario.get('contra')?.touched && formularioDeUsuario.get('contra')?.errors" class="invalid-feedback">
+          <div *ngIf="formularioDeUsuario.get('contra')?.errors?.['required']">La contraseña es obligatoria.</div>
+          <div *ngIf="formularioDeUsuario.get('contra')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
       </div>
-      <div class="mb-3">
-          <label for="" class="form-label">Contraseña: </label><br>
-              <input type="text"
-                class="form-control"   formControlName="contra" [ngClass]="{'is-invalid': submitted && ControlFormulario.correo.errors}"  placeholder="Ingrese su contraseña.">
-                <div *ngIf="submitted && ControlFormulario.correo.errors" class="invalid-feedback">
-                  <div *ngIf="ControlFormulario.contra.errors.required">La contra es obligatoria</div>
-                </div>   
+      
+      <button type="submit" [disabled]="formularioDeUsuario.invalid" class="btn btn-primary btn-block">Enviar</button>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
       </div>
-      <div class="mb-3" id="botonIni">
-  
-        <input type="submit" name="InicioSesion" id="Btn_IniSess" class="Boton" value="Iniciar sesion"  >
-      </div>
-    </section>
-  </form><br>
-  
+      <a routerLink="/Reset-password" class="password-link">¿Olvidaste tu contraseña?</a>
+    </form>
+  </div>
+</div>
+

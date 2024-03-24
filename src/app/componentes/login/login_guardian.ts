@@ -3,17 +3,14 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import {  CanActivate, Router} from "@angular/router";
 import { Observable, map } from "rxjs";
 
-
 @Injectable()
 export class Guardian implements CanActivate{
-
     constructor (
         private router: Router,
         private afAuth: AngularFireAuth
     ){}
 
     canActivate():Observable<boolean>{
-
         return this.afAuth.authState.pipe(
             map(user => {
               if (user) {
@@ -26,7 +23,5 @@ export class Guardian implements CanActivate{
               }
             })
           );
-    }
-
-    
+    }    
 }

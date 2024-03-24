@@ -1,0 +1,11 @@
+<div class="sensor-wrapper" (click)="seleccionarSensor()">
+  <div class="sensor-name">{{ sensor.Nombre }}</div>
+  <div class="sensor-lecturas">
+    <div class="sensor-humidity">
+      Humedad: {{ sensor.ultimaLectura.Humedad }}%
+    </div>
+    <div class="sensor-temperature">
+      Temperatura: {{ sensor.ultimaLectura.Temperatura }}°C
+    </div>
+  </div>
+</div>

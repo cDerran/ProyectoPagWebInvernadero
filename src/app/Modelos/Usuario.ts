@@ -3,8 +3,8 @@
 export class Usuario{
 
 
-    uid:String;
-    Tipo:String="";
+    uid:string;
+    Tipo:string="";
     email: string="";
     password:string="";
     nombre: string="";
@@ -12,7 +12,7 @@ export class Usuario{
     telefono: number=0;
     direccion: string="";
 
-    constructor(uid:String,email:string,password:string,Nombre:string,apellido:string,Telefono:number,direccion:string,Tipo:string){
+    constructor(uid:string,email:string,password:string,Nombre:string,apellido:string,Telefono:number,direccion:string,Tipo:string){
         this.uid = uid;
         this.nombre = Nombre;
         this.apellido = apellido;

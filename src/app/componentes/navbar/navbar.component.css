@@ -1,67 +1,99 @@
-body {
-    margin: 0;
-    padding: 0;
-  }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #557d57;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  font-size: 19px;
+}
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.navbar ul li {
+  display: inline-block;
+  margin-right: 20px; 
+}
+.navbar ul li a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+}
+
+.logo a.navbar-brand {
+  display: flex;
+  align-items: center;
+  color: #fff; 
+  text-decoration: none; 
+  padding-left: 10px;
+}
+
+.img01 {
+  border-radius: 50px;
+  width: 100px; 
+  height: 100px;
   
- 
-  .navbar {
-    position: fixed;
-    z-index: 1000;
-    background-color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    color: #fff;
-  }
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.menu li {
+  padding: 10px; 
+}
+.menu li a {
+  text-decoration: none;
+  color: #ffffff; 
+}
+.menu li a:hover {
+  border-bottom: 2px solid #ffffff; 
+}
+.navbar-toggler {
+  display: none;
+  border: none;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
   
-  .logo a {
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .nav-links {
-    display: flex;
-    justify-content: space-around;
-    width: 30%;
-  }
-  
-  .nav-links li {
-    list-style: none;
-  }
-  
-  .nav-links a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .burger {
+  .navbar ul {
     display: none;
-    cursor: pointer;
+    flex-direction: column;
+    width: 50%;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #557d57;
+    border-radius: 5px; 
+  }
+  .navbar ul.show {
+    display: flex;
+  }
+
+  .navbar-toggler {
+    display: block;
   }
   
-  .burger div {
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    margin: 5px;
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    
-    @media (max-width: 768px) {
-      .navbar-brand {
-        font-size: 20px;
-      }
-    
-      .navbar-nav .nav-link {
-        font-size: 16px;
-        margin-right: 5px;
-      }
-    }
+  .menu li {
+    text-align: right;
     
   }
- 
-  
+} 
+

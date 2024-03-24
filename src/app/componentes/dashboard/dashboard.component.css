@@ -1,0 +1,43 @@
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+  }
+  
+  .sensor-count {
+    flex: 0 0 auto; /* No crece, no se encoge, basado en el contenido */
+    padding: 10px;
+    margin-right: 10px; /* Espacio a la derecha del contador */
+    background-color: #f90; /* Color para el contador de sensores */
+  }
+  .sensors-display {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten a la siguiente línea si no hay espacio */
+  }
+  .sensor-info {
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    background-color: green;
+  }
+  .sensor-title {
+    padding: 10px;
+    background-color: darkgreen; /* Fondo para el título del sensor */
+    color: white; /* Texto blanco para el título */
+  }
+  
+  .sensor-readings {
+    display: flex;
+    padding: 10px;
+  }
+  
+  .humidity,
+  .temperature {
+    flex: 1; /* Ocupan el mismo espacio */
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    background-color: lightgreen; /* Fondo para las lecturas */
+    border: 1px solid #ddd; /* Borde para las lecturas */
+  }

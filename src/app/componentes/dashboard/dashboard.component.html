@@ -1,0 +1,14 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <div class="sensor-count">
+    {{ sensores.length }} sensores
+  </div>
+  
+  <div class="sensors-display">
+    <ng-container *ngFor="let sensor of sensores">
+      <app-sensor [sensor]="sensor" (click)="onSensorSeleccionado(sensor)"></app-sensor>
+    </ng-container>
+  </div>
+</div>
+
+<app-chart *ngIf="sensorActual" [sensor]="sensorActual"></app-chart>

@@ -1,0 +1,8 @@
+{
+    "/registrarUsuarioConRol": {
+      "target": "https://us-central1-tu-proyecto.cloudfunctions.net",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  

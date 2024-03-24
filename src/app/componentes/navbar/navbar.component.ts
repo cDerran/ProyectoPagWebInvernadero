@@ -1,7 +1,8 @@
-import { Component,ElementRef,HostListener, ViewChild  } from '@angular/core';
+import { Component,ElementRef,HostListener, Renderer2  } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoginService } from 'src/app/Servicios/login.service';
 import { UsuarioService } from 'src/app/Servicios/usuario.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,39 +11,58 @@ import { UsuarioService } from 'src/app/Servicios/usuario.service';
 })
 export class NavbarComponent {
     user: any;
-    isCollapsed: boolean = true;
+    isCollapsed = true;
     tipoUsuario: string ='';
+    private listener: () => void;
+    router: any;
+    userSubscription!: Subscription;
 
   constructor(
     private loginService:LoginService,
     private auth: AngularFireAuth,
-    private userService: UsuarioService
+    private userService: UsuarioService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ){ 
-    
-    this.auth.user.subscribe((user) => {
+
+    this.userSubscription = this.loginService.getUserState().subscribe((user) => {
       this.user = user;
-      
-      try{
+      if (this.user && this.user.uid) {
         this.obtenerTipoUsuario(this.user.uid);
-      }catch(err) {
-        console.log(err);
+      } else {
+        this.tipoUsuario = '';
       }
     });
+     
+    
+      this.listener = this.renderer.listen('document', 'click', (event) => {
+        if (!this.el.nativeElement.contains(event.target) && !this.isCollapsed) {
+          this.isCollapsed = true;
+        }
+      });
+
     
   }
-   ngOnInit(){
-    
-   }
-   
+
+  
    obtenerTipoUsuario(uid: string) {
-    this.userService.getTipoUsuario(uid).subscribe((tipo: string) => {
-      this.tipoUsuario = tipo;
-    });
+    
+      this.userService.getTipoUsuario(uid).subscribe((tipo: string) => {
+        
+        this.tipoUsuario = tipo;
+      });
+    
   }
 
    logout(){
-    this.loginService.logout();
-    this.tipoUsuario = '';
+    
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+    window.location.reload();
+    this.tipoUsuario = ''; // Limpiar el tipo de usuario
+    this.loginService.logout()
+
   } 
 
   closeNavbar() {
@@ -55,16 +75,6 @@ export class NavbarComponent {
 
   toggleNavbar() {
     this.isCollapsed = !this.isCollapsed;
-  }
-
-  @ViewChild('navbar', { static: false }) navbar: ElementRef | undefined;
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const targetElement = event.target as HTMLElement;
-    if (!this.navbar?.nativeElement.contains(targetElement)) {
-      this.isCollapsed = true; // Cerrar el navbar
-    }
   }
 
 }

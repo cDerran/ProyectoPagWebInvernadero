@@ -18,13 +18,9 @@ export class AppComponent {
     private auth: AngularFireAuth
   ){ 
 
-    this.auth.user.subscribe((user) => {
-      this.user = user;
-    });
+    
    }
-   logout(){
-    this.loginService.logout();
-  } 
+   
 
 
 
