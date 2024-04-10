@@ -1,0 +1,87 @@
+.card:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+
+  .container {
+    position: relative;
+  }
+   
+  .floating-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .floating-button {
+    position: fixed;
+    bottom: 20px; /* Distancia desde el borde inferior */
+    right: 20px; /* Distancia desde el borde derecho */
+    width: 50px; /* Ancho del botón */
+    height: 50px; /* Alto del botón */
+    border-radius: 50%; /* Hace que el botón sea un círculo */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    font-size: 24px; /* Tamaño del texto del botón */
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    cursor: pointer; /* Cambia el cursor al pasar por encima del botón */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra del botón */
+  }
+ 
+
+  .tooltip {
+    visibility: hidden; /* Oculta el globo de mensaje por defecto */
+    width: 120px; /* Ancho del globo de mensaje */
+    background-color: #333; /* Color de fondo del globo de mensaje */
+    color: #fff; /* Color del texto del globo de mensaje */
+    text-align: center; /* Alinea el texto al centro */
+    border-radius: 6px; /* Borde redondeado del globo de mensaje */
+    padding: 5px 0; /* Espaciado interno del globo de mensaje */
+    position: absolute; /* Posición absoluta para el globo de mensaje */
+    z-index: 1; /* Coloca el globo de mensaje por encima del botón */
+    top: calc(-100% - 10px); /* Alinea el globo de mensaje arriba del botón */
+    left: calc(50% - 20px); /* Alinea el globo de mensaje al centro horizontal */
+    transform: translateX(-50%); /* Centra el globo de mensaje horizontalmente */
+    opacity: 0; /* Inicialmente oculta el globo de mensaje */
+    transition: opacity 0.3s; /* Transición suave para la visibilidad */
+  }
+  .floating-button:hover .tooltip {
+    visibility: visible; /* Muestra el globo de mensaje al pasar por encima del botón */
+    opacity: 1; /* Hace visible el globo de mensaje */
+  }
+  
+  .range-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .temperature {
+    background-color: #ffeded;
+  }
+  
+  .humidity {
+    background-color: #edfaff;
+  }
+  
+  .row > .col {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  
+  .range-box > p {
+    word-wrap: break-word;
+  }
+  
+  /* Clase personalizada para agregar espaciado superior */
+  .spacing-top {
+    margin-top: 20px; /* Ajusta este valor según lo necesites */
+  }
+
+  .table {
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }

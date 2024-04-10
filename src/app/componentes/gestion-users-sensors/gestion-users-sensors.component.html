@@ -1,0 +1,33 @@
+<div class="table-responsive">
+  <h2>LISTA DE SENSORES DE CLIENTES</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Correo</th>
+        <th>Nombre</th>
+        <th>Sensores Desconectados</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.email }}</td>
+        <td>{{ user.nombre }} {{ user.apellido }}</td>
+        <td>
+          <ul *ngFor="let sensor of user.Sensores | keyvalue">
+            <ng-container *ngIf="sensor.value === false"> 
+              <li>
+                <input type="checkbox" [id]="sensor.key" [(ngModel)]="user.selectedSensors![sensor.key]">
+                <label [for]="sensor.key">{{ sensor.key }}</label>
+              </li>
+            </ng-container>
+          </ul>
+        </td>
+        <td>
+          <button *ngIf="user.uid" class="btn btn-primary" (click)="agregarSensor(user.uid)">Agregar Sensor</button>
+          <button class="btn btn-danger" (click)="eliminarSensoresSeleccionados(user)">Eliminar Sensor</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

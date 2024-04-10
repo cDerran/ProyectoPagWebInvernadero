@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { LoginService } from 'src/app/Servicios/login.service';
 
@@ -16,11 +17,13 @@ export class  LoginComponent implements OnInit  {
   mostrarContra: boolean = false;
   formularioDeUsuario!: FormGroup;
   errorMessage: string | null = null;
+  
 
   
   constructor(
     private loginService: LoginService,
     private formulario:FormBuilder,
+    private router: Router
   ) {}
 
   
@@ -36,7 +39,7 @@ export class  LoginComponent implements OnInit  {
     const {correo, contra} = this.formularioDeUsuario.value;
     this.loginService.login(correo, contra)
       .then(() => {
-        
+        this.router.navigate(['/Dashboard']);
       })
       .catch((error: FirebaseError) => {
         // Aquí manejas el error y estableces el mensaje para mostrarlo en la UI
@@ -70,6 +73,10 @@ export class  LoginComponent implements OnInit  {
       }
     }
     return '';
+  }
+
+  clearErrorMessage() {
+    this.errorMessage = null; 
   }
 
   toggleMostrarContra(): void {

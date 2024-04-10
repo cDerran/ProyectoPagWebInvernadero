@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row" *ngIf="sensores?.length">
+    <div class="col-md-4" *ngFor="let sensor of sensores" (click)="seleccionarSensor(sensor.id)">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ sensor.Nombre }}</h5>
+          <p class="card-text font-weight-bold spacing-top">Última lectura:</p>
+          <div class="row">
+            <div class="col">Temp: {{ sensor.ultimaLectura?.Temperatura }}°</div>
+            <div class="col">HR: {{ sensor.ultimaLectura?.Humedad }}%</div>
+          </div>
+          <p class="card-text font-weight-bold spacing-top">Rango óptimo:</p>
+          <div class="row">
+            <div class="col">
+              <div class="range-box temperature">
+                <p>Temperatura:</p>
+                <p>Min: {{ sensor.Control.Temperatura.Min }} - Max: {{ sensor.Control.Temperatura.Max }}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="range-box humidity">
+                <p>Humedad:</p>
+                <p>Min: {{ sensor.Control.Humedad.Min }} - Max: {{ sensor.Control.Humedad.Max }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="floating-button" (click)="mostrarSensoresDesconectados()">
+    +
+    <span class="tooltip">Mostrar Sensores Desconectados</span>
+  </div>
+  <div *ngIf="sensorSeleccionado && !viendoHistorial && !mostrarDetalleSensor">
+    <app-detalle-sensor [sensorId]="sensorSeleccionado" (sensorEliminado)="ocultarDetalleSensor()" (verHistorial)="verHistorial(sensorSeleccionado)"></app-detalle-sensor>
+  </div>
+
+  <div *ngIf="sensorSeleccionado && viendoHistorial">
+    <app-historial-sensor [sensorId]="sensorSeleccionado" (cerrarHistorial)="ocultarDetallesYHistorial()"></app-historial-sensor>
+  </div>
+
+  <div class="container" *ngIf="mostrarListaDesconectados">
+    <h2>Sensores Desconectados</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sensor of sensoresDesconectados; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ sensor.nombre }}</td>
+          <td>{{ sensor.tipo }}</td>
+          <td>
+            <button class="btn btn-success" (click)="conectarSensor(sensor.id)">Conectar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>

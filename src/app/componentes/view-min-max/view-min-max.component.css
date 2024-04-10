@@ -1,0 +1,19 @@
+.control-reading {
+    border: 1px solid #cccccc;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  
+  .control-name {
+    font-weight: bold;
+    display: block;
+    font-size: larger;
+  }
+  
+  .reading-value {
+    display: block;
+    margin: 5px 0;
+  }
+  

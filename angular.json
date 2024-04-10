@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ProyectoInvernadero:build:production"
+              "buildTarget": "ProyectoInvernadero:build:production"
             },
             "development": {
-              "browserTarget": "ProyectoInvernadero:build:development"
+              "buildTarget": "ProyectoInvernadero:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ProyectoInvernadero:build"
+            "buildTarget": "ProyectoInvernadero:build"
           }
         },
         "test": {
@@ -89,6 +89,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": []

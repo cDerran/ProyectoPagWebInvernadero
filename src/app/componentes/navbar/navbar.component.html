@@ -1,4 +1,47 @@
-  <header>
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <a class="navbar-brand" href="/MisionVision"><img class="img01" src="./../assets/LogoChikito.jpg"/></a>
+    </div>
+    <ul class="menu" [class.show]="!isCollapsed">
+      <!-- Mostrar Dashboard solo si hay usuario conectado y es de tipo Cliente -->
+      <li class="nav-item" *ngIf="user && tipoUsuario === 'Cliente'">
+        <a class="nav-link" routerLink="Dashboard" (click)="closeNavbar()">Dashboard</a>
+      </li>
+      <!-- Muestra Inicio solo si no está logueado o es cliente, Dashboard si es cliente -->
+      <li class="nav-item" >
+        <a class="nav-link" routerLink="MisionVision" (click)="closeNavbar()">Mision y Vision</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" routerLink="Nosotros" (click)="closeNavbar()">¿Quiénes somos?</a>
+      </li>
+      <!-- Ocultar si no está logueado o no es administrador -->
+      <li class="nav-item" *ngIf="user && tipoUsuario !== 'Administrador'">
+        <a class="nav-link" routerLink="DetallePlanta" (click)="closeNavbar()">Informacion Sensores</a>
+      </li>
+      <!-- Mostrar solo si es administrador -->
+      <li class="nav-item" *ngIf="user && tipoUsuario === 'Administrador'">
+        <a class="nav-link" routerLink="GestionUsuarios" (click)="closeNavbar()">Gestion de usuarios</a>
+      </li>
+      <!-- Cambiar entre Iniciar sesión y Cerrar sesión basado en el estado del usuario -->
+      <li class="nav-item" *ngIf="!user">
+        <a class="nav-link" routerLink="/Login" (click)="closeNavbar()">Iniciar sesión</a>
+      </li>
+      <li class="nav-item" *ngIf="user">
+        <a class="nav-link" (click)="logout()">Cerrar Sesion</a>
+      </li>
+    </ul>
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+</header>
+
+
+
+
+<!--   <header>
       <nav class="navbar">
          <div class="logo">
             <a class="navbar-brand" href="/Inicio"><img class="img01" src="./../assets/LogoChikito.jpg"/></a>
@@ -16,4 +59,5 @@
             <span class="navbar-toggler-icon"></span>
           </button>
       </nav>
-  </header>
+  </header> -->
+

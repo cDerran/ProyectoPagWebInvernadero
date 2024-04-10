@@ -1,0 +1,41 @@
+<div>
+  <label for="yearSelect">Año:</label>
+  <select id="yearSelect" [(ngModel)]="selectedYear">
+    <!-- Genera opciones de año dinámicamente o estáticamente -->
+    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+  </select>
+
+  <label for="monthSelect">Mes:</label>
+  <select id="monthSelect" [(ngModel)]="selectedMonth">
+    <!-- Los meses podrían ser estáticos ya que siempre son 12 -->
+    <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+  </select>
+
+  <button (click)="filterLecturas()">Filtrar</button>
+</div>
+
+<div *ngIf="historialLecturas && historialLecturas.length > 0; else noDataTemplate">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Temperatura (°C)</th>
+        <th>Humedad (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lectura of historialLecturas">
+        <td>{{ lectura.FechaHora | date:'yyyy-MM-dd' }}</td>
+        <td>{{ lectura.FechaHora | date:'HH:mm:ss' }}</td>
+        <td>{{ lectura.Temperatura }}</td>
+        <td>{{ lectura.Humedad }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noDataTemplate>
+  <p>No hay datos de lectura para mostrar.</p>
+</ng-template>
+
+<button (click)="cerrarHistorialSensor()">Cerrar Historial</button>

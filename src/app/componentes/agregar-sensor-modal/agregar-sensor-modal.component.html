@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Agregar Sensor</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>ID del Sensor</mat-label>
+      <input matInput [(ngModel)]="sensorId">
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button (click)="agregar()">Agregar</button>
+  </mat-dialog-actions>

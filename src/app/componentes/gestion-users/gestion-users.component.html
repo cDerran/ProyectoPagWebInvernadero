@@ -1,164 +1,149 @@
 <body>
- <!-- Parte Del Registro de Usuarios -->
- <div class="container mt-5">
-  <form [formGroup]="formReg" (ngSubmit)="registrarUsuario()" class="needs-validation" novalidate>
-    <fieldset class="border p-4 rounded">
-      <legend class="w-auto">Registro de Usuarios</legend>
-
-
-      <!-- Tipo de usuario -->
-      <div class="mb-3">
-        <label>Tipo de usuario:</label><br>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" formControlName="tipoUsuario" value="Administrador" id="tipoUsuarioAdmin" >
-          <label class="form-check-label" for="tipoUsuarioAdmin">Administrador</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" formControlName="tipoUsuario" value="Cliente" id="tipoUsuarioNormal" >
-          <label class="form-check-label" for="tipoUsuarioNormal">Usuario Normal</label>
-        </div>
-      </div>
-      <div *ngIf="formReg.get('tipoUsuario')?.errors && formReg.get('tipoUsuario')?.dirty" class="invalid-feedback">
-        <div *ngIf="formReg.get('tipoUsuario')?.hasError('required')">El tipo de usuario es requerido.</div>
-      </div>
-
-      <!-- Campos del formulario -->
-
-      <!-- Email -->
-      <div class="form-group ">
-        <label for="inputEmail" class="form-label">Email:</label>
-        <div class="col-sm-9">
-          <input type="email" id="inputEmail" formControlName="email" class="form-control">
-          <div *ngIf="formReg.get('email')?.errors && formReg.get('email')?.dirty"class="invalid-feedback">
-            <div *ngIf="formReg.get('email')?.hasError('required')">El email es requerido.</div>
-            <div *ngIf="formReg.get('email')?.hasError('email')">El email debe tener un formato válido.</div>
+    <div  class="button-container">
+      <button (click)="mostrarListaDeUsuarios()">Mostrar Lista de Usuarios</button>
+      <button (click)="mostrarAdminClienteSensores()">Mostrar Clientes con Sensores</button>
+      <button (click)="mostrarFormularioRegistro()">Registrar Nuevo Usuario</button>
+    </div>
+    <div *ngIf="mostrarListaUsuarios">
+      <app-tabla-usuarios [usuarios]="Lista" (usuarioAEditar)="manejarEdicionUsuario($event)"></app-tabla-usuarios>
+    </div>
+    <div *ngIf="mostrarGestionSensores">
+      <app-gestion-users-sensors></app-gestion-users-sensors>
+    </div>
+  <div class="container mt-5" *ngIf="mostrarFormulario" id="formRegistro">
+    <form [formGroup]="formReg" (ngSubmit)="registrarUsuario()" class="needs-validation" novalidate>
+      <fieldset class="border p-4 rounded">
+        <legend class="w-auto">Registro de Usuarios</legend>
+        <!-- Tipo de usuario -->
+        <div class="form-group">
+          <label class="form-label">Tipo de usuario:</label>
+          <div class="form-check-group">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="tipoUsuario" value="Administrador" id="tipoUsuarioAdmin">
+              <label class="form-check-label" for="tipoUsuarioAdmin">Administrador</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="tipoUsuario" value="Cliente" id="tipoUsuarioCliente">
+              <label class="form-check-label" for="tipoUsuarioCliente">Cliente</label>
+            </div>
+            <div *ngIf="formReg.get('tipoUsuario')?.errors && (formReg.get('tipoUsuario')?.dirty || formReg.get('tipoUsuario')?.touched)" class="error-message">
+              <div *ngIf="formReg.get('tipoUsuario')?.hasError('required')">El tipo de usuario es requerido.</div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Password -->
-      <div class="form-group">
-        <label for="inputPassword" class="form-label">Contraseña:</label>
-        <div class="col-sm-9 position-relative">
-          <input [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" class="form-control" id="inputPassword">
-          <button type="button" class="toggle-password" (click)="toggleMostrarPassword()">
-            <i [ngClass]="mostrarPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-          </button>
-          <div *ngIf="formReg.get('password')?.errors && formReg.get('password')?.dirty" class="invalid-feedback">
-            <div *ngIf="formReg.get('password')?.hasError('required')">La contraseña es requerida.</div>
-            <div *ngIf="formReg.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</div>
-          </div>
-        </div>
-      </div>
-      
-
-      <!-- Nombre -->
-      <div class="form-group">
-        <label for="inputNombre" class="form-label">Nombre:</label>
-        <div class="col-sm-9">
-          <input type="text" formControlName="nombre" class="form-control"  id="inputNombre">
-          <div *ngIf="formReg.get('nombre')?.errors && formReg.get('nombre')?.dirty" class="invalid-feedback">
-            <div *ngIf="formReg.get('nombre')?.hasError('required')">El nombre es requerido.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Apellido -->
-      <div class="form-group">
-        <label for="inputApellido"  class="form-label">Apellido:</label>
-        <div class="col-sm-9">
-          <input type="text" formControlName="apellido" class="form-control" id="inputApellido" >
-          <div *ngIf="formReg.get('apellido')?.errors && formReg.get('apellido')?.dirty">
-            <div *ngIf="formReg.get('apellido')?.hasError('required')">El apellido es requerido.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Direccion -->
-      <div class="form-group">
-        <label for="inputDireccion" class="form-label" >Direccion:</label>
-        <div class="col-sm-9">
-          <input type="text" formControlName="direccion" class="form-control" id="inputDireccion" >
-          <div *ngIf="formReg.get('direccion')?.errors && formReg.get('direccion')?.dirty" class="invalid-feedback">
-            <div *ngIf="formReg.get('direccion')?.hasError('required')">La dirección es requerida.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Telefono -->
-      <div class="form-group">
-        <label for="inputTelefono" class="form-label">Telefono:</label>
-        <div class="col-sm-9">
-          <input type="text" formControlName="telefono" class="form-control"  (input)="SoloNumeros($event)" id="inputTelefono">
-          <div *ngIf="formReg.get('telefono')?.errors && formReg.get('telefono')?.dirty" class="invalid-feedback">
-            <div *ngIf="formReg.get('telefono')?.hasError('required')">El teléfono es requerido.</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div class="text-center">
-        <button type="submit" *ngIf="!modoEdicion" class="btn btn-outline-success">Registrar Nuevo Usuario</button>
-        <button type="button" *ngIf="modoEdicion" class="btn btn-outline-success" (click)="aceptarEdicion()">Aceptar</button>
-      </div>
-      
-  
-
-  </fieldset>
-  </form>
-</div>
-
-<!-- Parte de Filtrado de usuario -->
-<div class="text-center">
-  <button type="button" class="btn btn-primary me-2" (click)="MostrarTodos()">Mostrar Todos</button>
-  <button type="button" class="btn btn-primary me-2" (click)="mostrarUsuariosNormales()">Mostrar Cliente</button>
-  <button type="button" class="btn btn-primary" (click)="mostrarUsuariosAdministradores()">Mostrar Administradores</button>
-</div>
-
-<div class="BuscarUsuario mt-3">
-  <form class="d-flex" role="search">
-    <input class="form-control me-2" type="search" placeholder="Ingresa Correo para buscar" aria-label="Search" [(ngModel)]="filtroEmail" [ngModelOptions]="{standalone: true}" (input)="filtrarUsuariosAutomaticamente()">
-  </form><br>
-</div>
-
-
-<!-- Parte de Listar Usuarios -->
-<div class="table-responsive">
-  <h1>LISTA DE USUARIOS REGISTRADOS</h1>
-  <table class="table table-responsive">
-    <thead class="thead-dark letrapequena">
-      <tr *ngIf="tieneUsuarios" >
         
-        <th>NOMBRE</th>
-        <th>APELLIDO</th>
-        <th>EMAIL</th>
-        <th>Contraseña</th>
-        <th>DIRECCION</th>
-        <th>TELEFONO</th>
-        <th>GESTIONAR</th>
-      </tr>
-    </thead>
-    <tbody>
-       <ng-template ngFor let-contacto [ngForOf]="UsuariosMostrados">
-        <tr *ngIf="contacto.email.includes(filtroEmail)">
-          <td data-label="Nombre">{{ contacto?.nombre }}</td>
-          <td data-label="apellido">{{ contacto?.apellido }}</td>
-          <td data-label="email">{{ contacto?.email }}</td>
-          <td data-label="password">{{ contacto?.password }}</td>
-          <td data-label="direccion">{{ contacto?.direccion }}</td>
-          <td data-label="telefono">{{ contacto?.telefono }}</td>
-          <td data-label="botones">
-            <button class="btn btn-outline-warning" (click)="editarUsuario(contacto)">MODIFICAR</button>
-            <button class="btn btn-danger"(click)="eliminarUsuario(contacto)">ELIMINAR</button>
-          </td>
-        </tr>
-      </ng-template> 
-      
-    </tbody>
-  </table>
+        <!-- Campos del formulario -->
 
-  <ng-template *ngIf="!tieneUsuarios">
-    <h1 class="cambio_color1"><p>No hay usuarios registrados.</p></h1>
-  </ng-template>
-</div>
- </body>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="inputEmail" class="form-label">Email:</label>
+          <div class="col-sm-9 position-relative">
+            <input 
+              type="email" 
+              formControlName="email" 
+              id="inputEmail" 
+              class="form-control"
+              [ngClass]="{'is-invalid': formReg.get('email')?.touched && formReg.get('email')?.invalid }"
+              matTooltip="{{ getErrorMessage('email') }}"
+              [matTooltipDisabled]="!formReg.get('password')?.errors"
+              (focus)="clearErrorMessage()"
+            >
+          </div>
+        </div>
+        <!-- Password -->
+        <div class="form-group">
+          <label for="inputPassword" class="form-label">Contraseña:</label>
+          <div class="position-relative col-sm-9">
+            <input 
+              [type]="mostrarPassword ? 'text' : 'password'" 
+              formControlName="password" 
+              class="form-control" 
+              id="inputPassword" 
+              [ngClass]="{'is-invalid': formReg.get('password')?.touched && formReg.get('password')?.errors}"
+              matTooltip="{{ getErrorMessage('password') }}" 
+              [matTooltipDisabled]="!formReg.get('password')?.errors"
+              (focus)="clearErrorMessage()"
+            >
+            <button type="button" class="toggle-password" (click)="toggleMostrarPassword()">
+              <i [ngClass]="mostrarPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="inputNombre" class="form-label">Nombre:</label>
+          <div class="col-sm-9 position-relative">
+            <input 
+              type="text" 
+              formControlName="nombre" 
+              class="form-control"  
+              id="inputNombre"
+              [ngClass]="{'is-invalid': formReg.get('nombre')?.touched && formReg.get('nombre')?.errors}"
+              matTooltip="{{ getErrorMessage('nombre') }}" 
+              [matTooltipDisabled]="!formReg.get('nombre')?.errors"
+              (focus)="clearErrorMessage()"
+            >
+          </div>
+        </div>
+        
+      
+        <!-- Apellido -->
+        <div class="form-group">
+          <label for="inputApellido" class="form-label">Apellido:</label>
+          <div class="col-sm-9 position-relative">
+            <input 
+              type="text" 
+              formControlName="apellido" 
+              class="form-control"  
+              id="inputApellido"
+              [ngClass]="{'is-invalid': formReg.get('apellido')?.touched && formReg.get('apellido')?.errors}"
+              matTooltip="{{ getErrorMessage('apellido') }}" 
+              [matTooltipDisabled]="!formReg.get('apellido')?.errors"
+              (focus)="clearErrorMessage()"
+            >
+          </div>
+        </div>
+        <!-- Direccion -->
+        <div class="form-group">
+          <label for="inputDireccion" class="form-label">Direccion:</label>
+          <div class="col-sm-9 position-relative">
+            <input 
+              type="text" 
+              formControlName="direccion" 
+              class="form-control"  
+              id="inputDireccion"
+              [ngClass]="{'is-invalid': formReg.get('direccion')?.touched && formReg.get('direccion')?.errors}"
+              matTooltip="{{ getErrorMessage('direccion') }}" 
+              [matTooltipDisabled]="!formReg.get('direccion')?.errors"
+              (focus)="clearErrorMessage()"
+            >
+          </div>
+        </div>
+        <!-- Telefono -->
+        <div class="form-group">
+          <label for="inputTelefono" class="form-label">Telefono:</label>
+          <div class="col-sm-9 position-relative">
+            <input 
+              type="text" 
+              formControlName="telefono" 
+              class="form-control"  
+              id="inputTelefono"
+              [ngClass]="{'is-invalid': formReg.get('telefono')?.touched && formReg.get('telefono')?.errors}"
+              matTooltip="{{ getErrorMessage('telefono') }}" 
+              [matTooltipDisabled]="!formReg.get('telefono')?.errors"
+              (focus)="clearErrorMessage()"
+              (input)="SoloNumeros($event)"
+            >
+          </div>
+        </div>
+         <!-- parte del envio  -->
+        <div class="text-center">
+          <button type="submit" *ngIf="!modoEdicion" class="btn btn-outline-success">Registrar Nuevo Usuario</button>
+          <button type="button" *ngIf="modoEdicion" class="btn btn-outline-success" (click)="aceptarEdicion()">Aceptar</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</body>
+ 

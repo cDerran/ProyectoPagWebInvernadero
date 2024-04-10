@@ -4,6 +4,7 @@ body {
 
 .container {
   max-width: 800px; 
+  
 }
   
 .form-label {
@@ -15,8 +16,191 @@ body {
   margin-right: 1rem; 
 }
 
+.tipo-usuario-error {
+  margin-left: 20px; /* O el valor que consideres adecuado */
+  display: inline-block; /* O 'inline-block' si prefieres */
+}
+
+.form-check-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.form-check {
+  margin-right: 1rem; /* Ajusta el espacio entre las opciones */
+}
+.error-message {
+  flex-grow: 1;
+  color: #dc3545; /* O el color que uses para los mensajes de error */
+  padding-left: 1rem; /* Asegura algo de espacio entre la opción y el mensaje de error */
+  /* Otros estilos que desees aplicar */
+}
+
+.form-check .invalid-feedback {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 10px; /* Espacio entre la etiqueta y el mensaje de error */
+}
+
 .btn {
     margin: 20px 0;
+}
+
+fieldset {
+  border: 3px solid #dee2e6; /* Ajusta el color del borde si es necesario */
+  margin-bottom: 1rem;
+  border-radius: 5rem;
+}
+
+legend {
+  width: 100%;
+  background: #f7f7f7;
+  color: #333; /* Ajusta el color del texto si es necesario */
+  padding: 0.5rem;; /* Ajusta el color del borde si es necesario */
+  border-radius: 0.25rem;
+}
+
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff; /* O el color que estés usando para tus botones en la tabla */
+  border-color: #007bff;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+
+
+.table-responsive {
+  margin: auto;
+}
+
+.table td button:not(:last-child) {
+  margin-right: 8px; /* o la cantidad de espacio que prefieras */
+}
+
+.table td {
+  vertical-align: middle; /* Esto centrará verticalmente el contenido dentro de la celda */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.form-control {
+  width: 100%; /* O el ancho que prefieras, debe sumar 100% con el ancho del label */
+  flex-grow: 1; /* Para que el input se expanda y llene el espacio restante */
+  position: relative;
+}
+
+.form-group label {
+  align-self: flex-start;
+  font-weight: bold; 
+  position: relative;
+  z-index: 1; /* Asegura que el label esté sobre el mensaje de error */
+}
+  
+
+.button-group > button {
+    margin-right: 10px; 
+}
+
+
+
+.BuscarUsuario {
+    margin-top: 20px; 
+}
+
+.BuscarUsuario form {
+    justify-content: center;
+    display: flex;
+}
+
+.BuscarUsuario input {
+    width: 100%; 
+    max-width: 768px; 
+}
+  
+  /* Estilos para el botón de mostrar/ocultar contraseña */
+  .toggle-password {
+    position: absolute;
+    right: 20px; /* Ajusta la distancia desde la derecha */
+    top: 50%; /* Centra verticalmente */
+    transform: translateY(-50%); /* Alineación precisa */
+    background: transparent;
+    border: none;
+}
+  
+  /* Estilos específicos para el mensaje de error */
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 8px; /* Aumenta el espacio superior */
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  color: #dc3545;
+  position: absolute;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545; /* Esto es para un resaltado rojo estándar de Bootstrap */
+}
+
+.position-relative {
+  position: relative; /* Contenedor relativo para el botón de contraseña */
+}
+.position-relative + .form-group {
+    margin-top: 2rem; /* Asegura que haya espacio después de un mensaje de error */
+}
+
+#inputpassword + .invalid-feedback {
+  bottom: -1.5rem; /* Ajusta según la altura del mensaje de error */
+  left: 15px; /* Alineación con el campo de contraseña */
+}
+
+#inputEmail + .invalid-feedback {
+  bottom: -1.5rem; /* Consistencia en la posición de los mensajes de error */
+  left: 15px; /* Alineación con el campo de email */
+}
+.error-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #dc3545; /* Color rojo para los errores */
+  cursor: help; /* Cambia el cursor a 'help' cuando se pasa por encima */
+}
+.is-invalid {
+  border-color: #dc3545; /* Esto es para un resaltado rojo estándar de Bootstrap */
+}
+
+.button-container {
+  text-align: center; /* Centra los botones en el contenedor */
+  padding: 1rem; /* Espaciado alrededor de los botones */
+}
+
+.button-container button {
+  margin: 0 0.5rem; /* Espacio entre los botones */
+  padding: 0.5rem 1rem; /* Espaciado dentro de los botones */
+  border: none; /* Opcional: elimina el borde de los botones */
+  border-radius: 0.25rem; /* Bordes redondeados */
+  cursor: pointer; /* Icono de mano al pasar sobre los botones */
+  background-color: #007bff; /* Color de fondo por defecto */
+  color: white; /* Color del texto */
+  font-size: 1rem; /* Tamaño de fuente */
+  transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.button-container button:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el ratón */
 }
 
 @media (max-width: 768px) { 
@@ -32,6 +216,8 @@ body {
   }
 
   .form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
     flex-basis: auto; /* El input toma el ancho que necesita */
   }
 
@@ -75,106 +261,4 @@ body {
       text-transform: uppercase;
     }
     
-}
-
-.table-responsive {
-  margin: auto;
-}
-
-.table td button:not(:last-child) {
-  margin-right: 8px; /* o la cantidad de espacio que prefieras */
-}
-
-.table td {
-  vertical-align: middle; /* Esto centrará verticalmente el contenido dentro de la celda */
-}
-
-.form-group {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  margin-bottom: 1.5rem;
-  align-items: center;
-}
-
-.form-control {
-  width: 100%; /* O el ancho que prefieras, debe sumar 100% con el ancho del label */
-  flex-grow: 1; /* Para que el input se expanda y llene el espacio restante */
-  position: relative;
-}
-
-.form-group label {
-  align-self: flex-start;
-  position: relative;
-  z-index: 1; /* Asegura que el label esté sobre el mensaje de error */
-}
-  
-
-
-.form-check {
-    margin-right: 0.5rem;
-    display: inline-block; 
-}
-
-.button-group > button {
-    margin-right: 10px; 
-}
-
-
-
-.BuscarUsuario {
-    margin-top: 20px; 
-}
-
-.BuscarUsuario form {
-    justify-content: center;
-    display: flex;
-}
-
-.BuscarUsuario input {
-    width: 100%; 
-    max-width: 768px; 
-}
-  
-  /* Estilos para el botón de mostrar/ocultar contraseña */
-.toggle-password {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  z-index: 2;
-}
-  
-  /* Estilos específicos para el mensaje de error */
-.invalid-feedback {
-  display: flex;
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 0.875rem;
-  color: #dc3545;
-  position: absolute;
-}
-
-
-
-.form-control.is-invalid {
-    border-color: #dc3545; /* Esto es para un resaltado rojo estándar de Bootstrap */
-}
-
-
-.position-relative + .form-group {
-    margin-top: 2rem; /* Asegura que haya espacio después de un mensaje de error */
-}
-
-#inputpassword + .invalid-feedback {
-  bottom: -1.5rem; /* Ajusta según la altura del mensaje de error */
-  left: 15px; /* Alineación con el campo de contraseña */
-}
-
-#inputEmail + .invalid-feedback {
-  bottom: -1.5rem; /* Consistencia en la posición de los mensajes de error */
-  left: 15px; /* Alineación con el campo de email */
 }

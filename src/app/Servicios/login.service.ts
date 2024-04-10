@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable, catchError, throwError } from "rxjs";
+import { UsuarioService } from "./usuario.service";
 
 
 @Injectable()
@@ -12,7 +13,8 @@ export class LoginService{
     constructor(
        
         private router: Router,
-        private afAuth: AngularFireAuth
+        private afAuth: AngularFireAuth,
+        private usuarioService: UsuarioService
     ){
         
 
@@ -24,12 +26,22 @@ export class LoginService{
     
     async login(email: string, password: string): Promise<void> {
       try {
-        await this.afAuth.signInWithEmailAndPassword(email, password);
-        this.router.navigate(['/Inicio']);
+        const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+        this.usuarioService.getTipoUsuario(userCredential.user!.uid).subscribe((rol) => {
+          if (rol === 'Cliente') {
+            this.router.navigate(['/Dashboard']);
+          } else if (rol === 'Administrador') {
+            this.router.navigate(['/GestionUsuarios']);
+          } else {
+            this.router.navigate(['/MisionVision']);
+          }
+        });
       } catch (error) {
-        throw error; // Lanza el error para que el componente lo maneje
+        throw error;
       }
     }
+
+
   logout() {
     return this.afAuth.signOut();
   }
@@ -37,9 +49,9 @@ export class LoginService{
   async sendPasswordResetEmail(email: string): Promise<void> {
     try {
       await this.afAuth.sendPasswordResetEmail(email);
-      console.log('Correo de restablecimiento enviado.');
+      alert('Correo de restablecimiento enviado.');
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   }
   

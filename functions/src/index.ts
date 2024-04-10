@@ -9,7 +9,6 @@ type DatosAuth = {
 };
 
 exports.eliminarUsuario = functions.https.onCall(async (data, context) => {
-  // Verifica si el usuario que llama a la función es un administrador
   if (!context.auth?.token.admin) {
     throw new functions.https.HttpsError(
       "permission-denied",
@@ -17,11 +16,11 @@ exports.eliminarUsuario = functions.https.onCall(async (data, context) => {
     );
   }
 
-  const {userId, tipoUsuario} = data;
+  const {userId, Tipo} = data;
 
   try {
     await admin.auth().deleteUser(userId);
-    const dbPath=`Usuarios/${tipoUsuario==="Administrador"?
+    const dbPath=`Usuarios/${Tipo==="Administrador"?
       "Administradores":"Clientes"}/${userId}`;
     await admin.database().ref(dbPath).remove();
     return {
@@ -32,14 +31,13 @@ exports.eliminarUsuario = functions.https.onCall(async (data, context) => {
     console.error("Error al eliminar el usuario:", error);
     throw new functions.https.HttpsError(
       "internal",
-      "Error"// Error al eliminar el usuario
+      "Error"
     );
   }
 });
 
 exports.registrarUsuarioConRol=functions.https.onCall(
   async (data) => {
-  // Extraer la información del usuario desde los datos proporcionados
     const {
       email,
       password,
@@ -47,10 +45,9 @@ exports.registrarUsuarioConRol=functions.https.onCall(
       apellido,
       direccion,
       telefono,
-      tipoUsuario,
+      Tipo,
     } = data;
-
-    // Crear el usuario en Firebase Authentication
+    
     let userRecord;
     try {
       userRecord = await admin.auth().createUser({
@@ -64,21 +61,21 @@ exports.registrarUsuarioConRol=functions.https.onCall(
         "Error al crear el usuario en Authentication."
       );
     }
-    const claims = tipoUsuario === "Administrador" ? {admin: true} : {};
+    const claims = Tipo === "Administrador" ? {admin: true} : {};
     await admin.auth().setCustomUserClaims(
       userRecord.uid,
       claims);
 
     const userInfo={nombre, apellido, direccion, telefono, email,
-      Tipo: tipoUsuario, password};
+      Tipo: Tipo, password};
     const dbPath=
-    `Usuarios/${tipoUsuario===
+    `Usuarios/${Tipo===
       "Administrador"?"Administradores":"Clientes"}/${userRecord.uid}`;
     await admin.database().ref(dbPath).set(userInfo);
 
     return {
       success: true,
-      message: `Usuario ${tipoUsuario} registrado con éxito.`,
+      message: `Usuario ${Tipo} registrado con éxito.`,
       uid: userRecord.uid};
   });
 
@@ -91,7 +88,7 @@ exports.actualizarUsuario = functions.https.onCall(async (data, context) => {
     uid,
     email,
     password,
-    tipoUsuario,
+    Tipo,
     nombre,
     apellido,
     direccion,
@@ -105,14 +102,14 @@ exports.actualizarUsuario = functions.https.onCall(async (data, context) => {
     if (Object.keys(authUpdate).length > 0) {
       await admin.auth().updateUser(uid, authUpdate);
     }
-    const nodoBase=tipoUsuario==="Administrador"?"Administradores":"Clientes";
+    const nodoBase=Tipo==="Administrador"?"Administradores":"Clientes";
     const dbPath = `Usuarios/${nodoBase}/${uid}`;
     const datosDB = {
       nombre,
       apellido,
       direccion,
       telefono,
-      tipoUsuario,
+      Tipo,
       ...(email && {email}),
       ...(password && {password})};
     if (email) datosDB.email = email;

@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- dashboard.component.html -->
 <div class="dashboard-container">
   <div class="sensor-count">
@@ -9,6 +10,27 @@
       <app-sensor [sensor]="sensor" (click)="onSensorSeleccionado(sensor)"></app-sensor>
     </ng-container>
   </div>
-</div>
+  <div class="control-display">
+    <ng-container *ngFor="let control of controles">
+      <app-view-min-max   [control]="control"></app-view-min-max>
+    </ng-container>
+  </div>
+   <div class="date-selection" (change)="onDateChange()" *ngIf="sensorActual">
 
-<app-chart *ngIf="sensorActual" [sensor]="sensorActual"></app-chart>
+    <label for="yearSelect">Año:</label>
+    <select id="yearSelect" [(ngModel)]="selectedYear">
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+  
+    <label for="monthSelect">Mes:</label>
+    <select id="monthSelect" [(ngModel)]="selectedMonth">
+      <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+    </select>
+    </div>
+
+
+  
+  <div class="app-chart">
+    <app-chart *ngIf="sensorActual" [sensor]="sensorActual"></app-chart>
+  </div>
+</div>

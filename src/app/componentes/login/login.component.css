@@ -161,3 +161,21 @@ button[type='submit']:hover {
     outline: none;
     box-shadow: none;
   }
+
+  .mat-tooltip {
+    display: none; /* Ocultar el tooltip por defecto */
+  }
+  .mat-form-field.mat-focused .mat-form-field-wrapper:hover .mat-tooltip {
+    display: block; /* Mostrar el tooltip cuando el input está enfocado y el mouse está sobre él */
+  }
+
+  .mat-tooltip.is-invalid {
+    display: block; /* Mostrar el tooltip cuando el input tiene errores */
+    border: 1px solid red; /* Añadir un borde rojo alrededor del tooltip */
+    background-color: white; /* Cambiar el fondo del tooltip a blanco */
+    color: red; /* Cambiar el color del texto a rojo */
+    padding: 5px; /* Añadir un poco de espacio alrededor del texto del tooltip */
+  }
+  .mat-tooltip-position-right .mat-tooltip-arrow {
+    border-right-color: red; /* Añadir un borde rojo al borde derecho del tooltip */
+  }

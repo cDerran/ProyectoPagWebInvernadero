@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFireDatabase } from "@angular/fire/compat/database";
-import { Observable, combineLatest,of, Subject } from "rxjs";
-import { map, switchMap,takeUntil  } from "rxjs/operators";
+import { Observable, combineLatest,of, Subject,  } from "rxjs";
+import { map, switchMap  } from "rxjs/operators";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class UsuarioService{
@@ -59,7 +60,6 @@ export class UsuarioService{
     }
 
      getTipoUsuario(uid: string): Observable<string> {
-
       return this.db.object(`Usuarios/Clientes/${uid}`).valueChanges().pipe(
         switchMap((cliente) => {
           if (cliente) {
@@ -72,22 +72,33 @@ export class UsuarioService{
       );
     } 
     
-   
-
-    guardarDatos(uid: any, email: any, nombre: any, apellido: any, password: any,direccion:any,telefono:any) {
-      const datosUsuario = {
-            uid: uid,
-            email: email,
-            nombre:nombre,
-            apellido:apellido,
-            password:password,
-            direccion:direccion,
-            telefono:'+56'+telefono,
-            Tipo: ''
-          };
-        return this.db.object("/Usuarios/"+uid).set(datosUsuario);
-
+    DesconectarSensor(uid: string, sensorId: string): Promise<void> {
+      const sensorData = { [sensorId]: false };
+      return this.db.object(`Usuarios/Clientes/${uid}/Sensores/`).update(sensorData);
     }
+
+
+    eliminarSensor(uid: string, sensorId: string): Promise<void> {
+      return this.db.object(`Usuarios/Clientes/${uid}/Sensores/${sensorId}`).remove()
+        .then(() => {
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Sensor eliminado exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+        })
+        .catch(error => {
+          console.error("Error al eliminar el sensor:", error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Error al eliminar el sensor. Por favor, inténtalo de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        });
+    }
+
 
     registrarUsuarioConRol(usuarioData: any) {
       const registrarFn = this.functions.httpsCallable('registrarUsuarioConRol');
@@ -104,5 +115,44 @@ export class UsuarioService{
         map(users => users.length > 0)
       );
     }
+
+    agregarSensorACliente(sensorId: string, userId: string) {
+      const sensorData = { [sensorId]: true };
+      return this.db.object(`/Usuarios/Clientes/${userId}/Sensores`).update(sensorData);
+    }
+
+    
+    getSensoresDesconectados(uid: string): Observable<{ id: string; nombre: string; tipo: string }[]> {
+      return this.db.object<{ [key: string]: boolean }>(`/Usuarios/Clientes/${uid}/Sensores`).valueChanges().pipe(
+        switchMap(sensores => {
+          if (!sensores) {
+            return []; // Si sensores es nulo, devolvemos un array vacío
+          }
+          const sensorIds = Object.entries(sensores)
+            .filter(([_, conectado]) => !conectado)
+            .map(([sensorId, _]) => sensorId);
+          // Realizar una solicitud para obtener la información de cada sensor desconectado
+          const observables = sensorIds.map(sensorId => {
+            return this.getSensorInfo(sensorId).pipe(
+              map(info => ({ id: sensorId, ...info }))
+            );
+          });
+          return combineLatest(observables);
+        })
+      );
+    }
+    
+    getSensorInfo(sensorId: string): Observable<{ nombre: string; tipo: string }> {
+      return this.db.object(`/Sensores/${sensorId}`).valueChanges().pipe(
+        map((sensor: any) => {
+          return { nombre: sensor.Nombre, tipo: sensor.Tipo };
+        })
+      );
+    }
+
+  conectarSensor(uid: string, sensorId: string): Promise<void> {
+    const sensorData = { [sensorId]: true };
+      return this.db.object(`Usuarios/Clientes/${uid}/Sensores/`).update(sensorData);
+  }
 
 }

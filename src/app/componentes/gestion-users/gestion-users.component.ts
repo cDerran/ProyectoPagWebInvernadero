@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component,AfterViewInit,ViewChild  } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/Modelos/Usuario';
 import { UsuarioData } from 'src/app/Modelos/Usuario.interface';
 import { UsuarioService } from 'src/app/Servicios/usuario.service';
+import { TablaUsuariosComponent } from '../tabla-usuarios/tabla-usuarios.component';
 
 
 @Component({
   selector: 'app-gestion-users',
   templateUrl: './gestion-users.component.html',
-  styleUrls: ['./gestion-users.component.css']
+  styleUrls: ['./gestion-users.component.css'],
 })
 
 
@@ -16,14 +18,21 @@ export class GestionUsersComponent {
   formReg: FormGroup;
   Lista:Usuario[] = [];
   UsuariosMostrados: any[] = [];
-  usuariosFiltrados: Usuario[] = [];
   tieneUsuarios!: boolean;
   modoEdicion: boolean = false;
   usuarioSeleccionado: any;
-  filtroEmail: string = '';
-  mostrarCamposExtras: boolean = true;
+  
   tipousuario: String = '';
   mostrarPassword: boolean = false;
+  router: any;
+  mostrarSensores: boolean = false;
+  mostrarListaUsuarios: boolean = true;
+  mostrarGestionSensores: boolean = false;
+  mostrarFormulario: boolean = false;
+  formularioEnviado = false;
+
+
+  formularioIntentadoEnviar = false;
   constructor(
     private userService:UsuarioService,
     private fb: FormBuilder
@@ -44,8 +53,7 @@ export class GestionUsersComponent {
     
     this.userService.getUsers().subscribe(usuarios => {
       this.Lista = usuarios;
-      this.UsuariosMostrados = usuarios; // Asegúrate de que todos los usuarios se muestren inicialmente
-      console.log(this.Lista);
+      this.UsuariosMostrados = usuarios; 
       });
 
     this.userService.ExistenUsuarios().subscribe(tieneUsuarios => {
@@ -55,55 +63,49 @@ export class GestionUsersComponent {
 
     
   }
-  MostrarTodos(){
-    this.UsuariosMostrados= this.Lista;
+
+  manejarEdicionUsuario(usuario: Usuario): void {
+  
+    this.mostrarFormulario = true; 
+    this.modoEdicion = true;
+    this.usuarioSeleccionado = usuario; 
+    this.scrollToForm(); 
+    
+   
+    this.formReg.patchValue({
+      email: usuario.email,
+      password: usuario.password, 
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      direccion: usuario.direccion,
+      telefono: usuario.telefono,
+      tipoUsuario: usuario.Tipo, 
+    });
+  
   }
 
   toggleMostrarPassword() {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
-  mostrarUsuariosNormales() {
-    this.UsuariosMostrados = this.Lista.filter(usuario => usuario.Tipo === 'Cliente');
-  }
   
-  mostrarUsuariosAdministradores() {
-    this.UsuariosMostrados = this.Lista.filter(usuario => usuario.Tipo === 'Administrador');
-  }
-
-  filtrarUsuariosAutomaticamente(){
-    this.usuariosFiltrados = this.Lista.filter(usuario =>
-      usuario.email.includes(this.filtroEmail)
-    );
-  }
-
-  editarUsuario(usuario: Usuario) {
-    this.modoEdicion = true;
-    this.usuarioSeleccionado = usuario;
-    
-    this.formReg.patchValue({
-      email: usuario.email,
-      password: usuario.password, // Cuidado aquí, la contraseña normalmente no se debería manejar así
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      direccion: usuario.direccion,
-      telefono: usuario.telefono,
-      tipoUsuario: usuario.Tipo, // Asegúrate de que el control se llame 'tipoUsuario' y no 'Tipo'
-    });
+  scrollToForm() {
+    setTimeout(() => {
+      document.getElementById('formRegistro')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100); // El setTimeout asegura que el desplazamiento ocurra después de que la vista del formulario se haya actualizado.
   }
 
   aceptarEdicion() {
     if (this.formReg.valid && this.usuarioSeleccionado) {
       // Preparar los datos que se van a actualizar.
+      
       let usuarioData: UsuarioData = {
         nombre: this.formReg.value.nombre,
         apellido: this.formReg.value.apellido,
         direccion: this.formReg.value.direccion,
         telefono: this.formReg.value.telefono,
-        tipoUsuario: this.formReg.value.tipoUsuario,
+        Tipo: this.formReg.value.tipoUsuario,
       };
-  
-      // Verifica si el correo electrónico ha cambiado
       if (this.formReg.value.email !== this.usuarioSeleccionado.email) {
         usuarioData.email = this.formReg.value.email; // Añadir email solo si ha cambiado
       }
@@ -118,38 +120,18 @@ export class GestionUsersComponent {
        this.userService.actualizarDatosUsuario(this.usuarioSeleccionado.uid, usuarioData)
         .subscribe({
           next: (result) => {
-            console.log(result); // Manejar la respuesta exitosa
             this.modoEdicion = false;
             this.usuarioSeleccionado = null;
             // Opcional: Actualizar la lista de usuarios mostrados aquí
           },
           error: (error) => {
-            console.error('Error al actualizar los datos del usuario:', error); // Manejar el error
+            alert('Error al actualizar los datos del usuario:'); // Manejar el error
           }
         }); 
     }
   }
   
-  
-
-  eliminarUsuario(user:Usuario) {
-    
-    if (window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
-     
-       this.userService.eliminarUsuario(user.uid, user.Tipo).subscribe({
-        next: (result) => {
-          console.log(result);
-          // Manejar éxito
-        },
-        error: (error) => {
-          console.error("Error al eliminar el usuario:", error);
-          // Manejar error
-        }
-      }); 
-    }
-  }
  
-
   SoloNumeros(event: any) {
     let input = event.target.value;
     input = input.replace(/\D/g, ''); // Filtra solo números
@@ -161,6 +143,7 @@ export class GestionUsersComponent {
   }
    
   registrarUsuario() {
+    this.formularioEnviado = true;
     if(this.formReg.valid){
 
       const usuarioData = {
@@ -170,16 +153,70 @@ export class GestionUsersComponent {
         apellido: this.formReg.value.apellido,
         direccion: this.formReg.value.direccion,
         telefono: this.formReg.value.telefono,
-        tipoUsuario: this.formReg.value.tipoUsuario,
+        Tipo: this.formReg.value.tipoUsuario,
       };
       this.userService.registrarUsuarioConRol(usuarioData).subscribe({
-      next: (result) => console.log(result),
-      error: (error) => console.error(error),
+      next: (result) => alert(result),
+      error: (error) => alert(error),
+    });
+    }else{
+      Object.keys(this.formReg.controls).forEach(field => {
+        const control = this.formReg.get(field);
+        control?.markAsTouched({ onlySelf: true });
     });
     }
 
     
   }
 
+
+  mostrarListaDeUsuarios(): void {
+    this.mostrarListaUsuarios = true;
+    this.mostrarGestionSensores = false;
+    this.mostrarFormulario = false;
+    
+  }
+
+  mostrarAdminClienteSensores():void {
+    this.mostrarListaUsuarios = false;
+    this.mostrarGestionSensores = true;
+    this.mostrarFormulario = false;;
+  }
+
+  mostrarFormularioRegistro() {
+    this.mostrarFormulario = true;
+    this.modoEdicion = false;
+    this.usuarioSeleccionado = null;
+    this.mostrarListaUsuarios = false;
+    this.mostrarGestionSensores = false;
+    this.formReg.reset();
+  }
+
+  convertirEmailAMinusculas() {
+    const email = this.formReg.get('email')?.value.toLowerCase();
+    this.formReg.get('email')?.setValue(email, { emitEvent: false }); 
+  }
+  
+
+  getErrorMessage(field: string): string {
+    const control = this.formReg.get(field);
+    if (control && control.errors && (control.touched || this.formularioIntentadoEnviar)) {
+      if (control.hasError('required')) {
+        return 'Este campo es requerido.';
+      } else if (field === 'password' && control.hasError('minlength')) {
+        return 'La contraseña debe tener al menos 6 caracteres.';
+      } else if (field === 'telefono' && control.hasError('minlength')) {
+        return 'El teléfono debe tener al menos 9 dígitos.';
+      } else if (control.hasError('email')) {
+        return 'El email debe tener un formato válido.';
+      }
+    }
+    return '';
+  }
+
+
+  clearErrorMessage(): void {  }
+
+  
   
 }

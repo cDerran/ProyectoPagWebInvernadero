@@ -1,0 +1,63 @@
+<div class="edit-form">
+  <h4>DETALLES</h4>
+  <form [formGroup]="sensorForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Nombre -->
+    <div class="form-group">
+      <label for="Nombre">Nombre</label>
+      <input type="text" class="form-control" id="Nombre" formControlName="nombre" >
+    </div>
+
+    <!-- Ubicación -->
+    <div class="form-group">
+      <label for="Ubicacion">Ubicacion</label>
+      <input type="text" class="form-control" id="Ubicacion" formControlName="ubicacion">
+    </div>
+
+    <!-- Control de Temperatura -->
+    <div formGroupName="controlTemperatura">
+      <div class="form-group">
+        <label>Temperatura</label>
+        <div>
+          <label for="Temp-MIN">MIN</label> 
+          <input type="number" class="form-control" id="Temp-MIN" formControlName="min"  step="any">
+        </div>
+        <div>
+          <label for="Temp-MAX">MAX</label>
+          <input type="number" class="form-control" id="Temp-MAX" formControlName="max" step="any">
+        </div>
+        <div *ngIf="sensorForm.get('controlTemperatura')?.errors?.['minMaxInvalid']" class="alert alert-danger">
+          El valor mínimo no puede ser mayor que el máximo.
+        </div>
+      </div>
+    </div>
+
+    <!-- Control de Humedad -->
+    <div formGroupName="controlHumedad">
+      <div class="form-group">
+        <label>Humedad</label>
+        <div>
+          <label for="HR-MIN">MIN</label>
+          <input type="number" class="form-control" id="HR-MIN" formControlName="min"  step="any">
+        </div>
+        <div>
+          <label for="HR-MAX">MAX</label>
+          <input type="number" class="form-control" id="HR-MAX" formControlName="max" step="any">
+        </div>
+        <div *ngIf="sensorForm.get('controlHumedad')?.errors?.['minMaxInvalid']" class="alert alert-danger">
+          El valor mínimo no puede ser mayor que el máximo.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="badge badge-success mr-2" [disabled]="!sensorForm.valid">
+      Actualizar Sensor
+    </button>
+    <button class="badge badge-danger mr-2" (click)="EliminarSensor()"> Eliminar Sensor </button>
+    <button class="badge badge-info" (click)="verHistorialSensor()"> Ver Historial </button>
+  </form>
+
+  
+</div>
+
+<div>

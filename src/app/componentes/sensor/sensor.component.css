@@ -1,33 +1,59 @@
-.sensor-wrapper {
+.sensor-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: green; /* Color de fondo para el wrapper */
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px; /* Bordes redondeados para el wrapper */
-  cursor: pointer;
+  justify-content: space-between; /* Esto separa los contenedores de lectura */
+  margin-bottom: 10px; 
+  height: 120px;
+   
+}
+
+
+.sensor-reading {
+  background: #4CAF50; /* Verde como color de fondo */
+  border: 2px solid #388E3C; /* Un verde más oscuro para el borde */
+  border-radius: 8px; /* Bordes redondeados */
+  margin: 5px; /* Margen alrededor de cada lectura */
+  padding: 10px; /* Espacio dentro de cada lectura */
+  box-sizing: border-box; /* Asegura que padding y border no aumenten el ancho */
+  text-align: center; /* Centra el texto horizontalmente */
+  display: flex;
+  flex-direction: column; /* Organiza el contenido en columnas */
+  justify-content: center; /* Centra el contenido verticalmente */
+  flex: 1; /* Asegura que todos los elementos flexibles tengan la misma proporción */
+  height: 100%;
+}
+
+/* Establece un mínimo y máximo para los elementos flexibles */
+.sensor-reading {
+  min-width: 120px; /* Mínimo ancho que puede tener cada cuadro */
+  max-width: 250px; 
 }
 
 .sensor-name {
-  font-size: 1.2em; /* Tamaño de fuente para el nombre del sensor */
-  font-weight: bold; /* Nombre del sensor en negrita */
+  font-weight: bold; /* Hace que el nombre del sensor sea más grueso */
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+
 }
 
-.sensor-lecturas {
-  display: flex;
-  justify-content: space-around;
-  width: 100%; /* Asegura que las lecturas llenen el ancho del contenedor */
+.reading-value {
+  color:rgb(255, 255, 255);
+  font-size: 1.2rem;
 }
 
-.sensor-humidity,
-.sensor-temperature {
-  flex: 1; /* Ambos toman el mismo espacio */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ddd; /* Fondo para los recuadros de lecturas */
-  margin: 5px;
-  padding: 10px;
-  border-radius: 5px; /* Bordes redondeados para los recuadros de lecturas */
+/* Puedes agregar más media queries para ajustar la responsividad */
+@media (max-width: 768px) {
+  .sensor-container {
+    flex-direction: column; /* Apila las lecturas verticalmente en dispositivos más pequeños */
+  }
+
+  .sensor-reading {
+    margin: 5px auto; /* Centra los elementos horizontalmente y añade margen vertical */
+    min-width: 80%; /* Los cuadros serán más anchos en dispositivos pequeños */
+  }
+}
+
+@media (max-width: 480px) {
+  .sensor-reading {
+    min-width: 90%; /* Los cuadros ocuparán más ancho en dispositivos muy pequeños */
+  }
 }

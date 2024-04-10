@@ -1,0 +1,23 @@
+<div *ngIf="control">
+    <div class="control-reading temperature-min">
+      <span class="sensor-name">{{ control.sensorNombre }}</span>
+      <span class="control-name">Temp Mínima</span>
+      <span class="reading-value"><h4>{{ control.Temperatura.Min }}°C</h4></span>
+    </div>
+    <div class="control-reading temperature-max">
+      <span class="sensor-name">{{ control.sensorNombre }}</span>
+      <span class="control-name">Temp Máxima</span>
+      <span class="reading-value"><h4>{{ control.Temperatura.Max }}°C</h4></span>
+    </div>
+    <div class="control-reading humidity-min">
+      <span class="sensor-name">{{ control.sensorNombre }}</span>
+      <span class="control-name">Humedad Mínima</span>
+      <span class="reading-value"><h4>{{ control.Humedad.Min }}%</h4></span>
+    </div>
+    <div class="control-reading humidity-max">
+      <span class="sensor-name">{{ control.sensorNombre }}</span>
+      <span class="control-name">Humedad Máxima</span>
+      <span class="reading-value"><h4>{{ control.Humedad.Max }}%</h4></span>
+    </div>
+  </div>
+  

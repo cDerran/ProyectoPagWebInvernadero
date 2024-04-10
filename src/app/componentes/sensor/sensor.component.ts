@@ -18,17 +18,15 @@ export class SensorComponent implements OnChanges{
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Opcionalmente, puedes reaccionar a cambios en el @Input() sensor aquí.
-    // Por ejemplo, si necesitas procesar las lecturas cada vez que cambian.
     if (changes['sensor']) {
       const currentSensor = changes['sensor'].currentValue;
-      // Haz algo con currentSensor, como procesar las lecturas.
     }
   }
   
   seleccionarSensor() {
     this.sensorSeleccionado.emit(this.sensor);
   }
+  
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
